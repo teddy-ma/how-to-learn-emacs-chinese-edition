@@ -17,7 +17,7 @@ Emacs 很可能已经安装了；如果没有，使用你的包管理器（yum, 
 如果你使用 [macports]( http://www.macports.org/)，安装 `emacs-app`，它给了你一个本地的 OS X 程序。默认情况下 macports 会安装`Emacs.app` 到 `/Applications/MacPorts`，如果你使用笔记本电脑，我建议你使用 `fullscreen` 变体（比如： `port install emacs-app +fullscreen`）来增加命令 `ns-toggle-fullscreen`。
 
 如果你使用 [homebrew]( http://mxcl.github.com/homebrew/)：
-`brew install emacs --cocoa`。
+`brew install emacs --with-cocoa`。
 
 另外，你可以使用一个 [预编译的emacs](http://emacsformacosx.com/)，但是考虑下使用 macports 或者 homebrew 这样就可以很容易的使用它们来安装其他 Unixy 工具。
 

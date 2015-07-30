@@ -4,8 +4,7 @@ status: public
 title: '基本的 Unix/C 工作流'
 ---
 
-hud 本章使用了 GUN Radline 库的源码来作为操作的例子. 你可以通过命令 `git clone git://git.savannah.gnu.org/readline.git` 来获取它,
-或者也可以使用你自己的 C 或者 C++ 代码.
+本章使用了 GUN Radline 库的源码来作为操作的例子。你可以通过命令 `git clone git://git.savannah.gnu.org/readline.git` 来获取它，或者也可以使用你自己的 C 或者 C++ 代码。
 
 ## c-mode
 
@@ -18,80 +17,80 @@ hud 本章使用了 GUN Radline 库的源码来作为操作的例子. 你可以�
 
 ## shell
 
-运行 shell 命令 (就是, M-x shell RET).
+运行 shell 命令 (就是 M-x shell RET)。
 
-这会创建一个新的缓冲区来运行环境变量指定的 shell. [^2] 这个缓冲区被称为 *shell* (星号是名字的一部分, 所以你不得不在使用 `C-x b` 切换时输入它们).
+这会创建一个新的缓冲区来运行环境变量指定的 shell。[^2] 这个缓冲区被称为 *shell* (星号是名字的一部分, 所以你不得不在使用 `C-x b` 切换时输入它们)。
 
-cd 到 readline 的目录然后运行下面的命令:
+cd 到 readline 的目录然后运行下面的命令：
 
 ``` shell
 ./configure
 make
 ```
-这个 *shell* 缓冲区的编辑模式是 shell-mode。你可以在 shell-mode 中运行任何 shell 命令；有些例外的是需要真正终端支持的, 比如分页(less) 和基于鼠标的程序。
-你失去了 bash 的 readline 补全和其他任何自定义的 bash-completion 脚本, 或者在这个模型下你的 shell 中的等效选择(虽然 Emacs 提供了它自己的命令历史和 tab 补全)。出于这些原因, 我倾向于使用一个真正的终端(在 Emacs 之外)运行一些任务，就像在一个 shell 中运行 Emacs 一样。 (尝试去在 Emacs 中做所有的事情就得不偿失了)。
+这个 *shell* 缓冲区的编辑模式是 shell-mode。你可以在 shell-mode 中运行任何 shell 命令；例外的情况是执行一些需要真正终端支持的，比如分页 (less) 和基于鼠标的程序。
+你失去了 bash 的 readline 补全和其他任何自定义的 bash-completion 脚本, 或者在这个模型下你的 shell 中的等效选择(虽然 Emacs 提供了它自己的命令历史和 tab 补全)。出于这些原因，我倾向于使用一个真正的终端(在 Emacs 之外)运行一些任务，就像在一个 shell 中运行 Emacs 一样。 (尝试去在 Emacs 中做所有的事情就得不偿失了)。
 
-shell-mode 的一大优势就是所有的输出都是可以被你搜索, 复制, 粘贴到的，或者其它行为, 都可以用 Emacs 的标准命令来操作；你不需要移动你的手到鼠标那儿仅仅为了选择一些文字。
+shell-mode 的一大优势就是所有的输出都是可以被你搜索，复制，粘贴到的，或者其它行为，都可以用 Emacs 的标准命令来操作；你不需要移动你的手到鼠标那儿仅仅为了选择一些文字。
 
-shell-mode 加入了一些按键绑定:
-输入 C-h m 然后阅读 shell-mode 的文档和它的按键绑定。
+shell-mode 加入了一些按键绑定：
 
-（目前为止, 不要操心去阅读帮助文档中关于自定义的部分 —  shell-mode 提供的变量和钩子去改变它的行为。在 shell-mode 之后的文档还有关于所有的激活状态的副模式的文档; 你也不需要阅读它们）。
+    输入 C-h m 然后阅读 shell-mode 的文档和它的按键绑定。
+
+（目前为止, 不要操心去阅读帮助文档中关于自定义的部分 —  shell-mode 提供的变量和钩子去改变它的行为。在 shell-mode 之后的文档还有关于所有的激活状态的副模式的文档；你也不需要阅读它们）。
 
 特别有趣的是按下 RET 或者 C-c RET 在前一个输入行中；C-<up> and C-<down> (or M-p and M-n) 来循环上一个命令；M-x 来循环目录。
 
-指出如何发送信号(比如: C-c) 给 shell。(提示：搜索帮助缓冲区的内容，关键字 "interrupt" 和 "stop")
+    指出如何发送信号(比如: C-c) 给 shell。(提示：搜索帮助缓冲区的内容，关键字 "interrupt" 和 "stop")
 
-指出 C-M-l(字母 l, 不是1) 和 C-c C-s 是做什么的 (这些都是在运行一个 shell 命令产出大量的输出时很有用的)[^3]
+    指出 C-M-l(字母 l, 不是1) 和 C-c C-s 是做什么的 (这些都是在运行一个 shell 命令产出大量的输出时很有用的)[^3]
 
 ## eshell
 
-如果你不是特别的执着于 bash 或者其它任何 shell，除了 shell 以外你可以考虑使用 eshll，一个完全由 Emacs lisp 实现的 shell。先不说其他优势，在 Windows 上运行 eshell 不需要 Cygwin；你可以输入 lisp 代码或者通过名字直接在 shell 提示符上执行任何 Emacs 命令；而且你可以重定向命令输出到 Emacs 剪切板或者任何打开的 Emacs 的缓冲区。
+如果你不是特别的执着于 bash 或者其它任何 shell，除了 shell 以外你可以考虑使用 eshell，一个完全由 Emacs lisp 实现的 shell。先不说其他优势，在 Windows 上运行 eshell 不需要 Cygwin；你可以输入 lisp 代码或者通过名字直接在 shell 提示符上执行任何 Emacs 命令；而且你可以重定向命令输出到 Emacs 剪切板或者任何打开的 Emacs 的缓冲区。
 
-我自己不使用 eshell，但是很多人会用。目前为止它可能是最简单的可以坚持使用的 shell (运行在 Emacs 内部的).
+我自己不使用 eshell，但是很多人会用。目前为止它可能是最简单的可以(运行在 Emacs 内部的)长期使用的 shell。
 
 ## ansi-term
 
-在 Emacs 中运行一个 shell 的最后一个选择就是 ansi-term 了. 这是一个完全的 terminal 模拟器, 而且它将会把大多数的按键直接发送给 terminal 中运行的程序。
+在 Emacs 中运行一个 shell 的最后一个选择就是 ansi-term 了。这是一个完全的 terminal 模拟器，而且它将会把大多数的按键直接发送给 terminal 中运行的程序。
 包含 TAB，所以会是 shell，而不是 Emacs，来执行 tab 补全。
 
 C-x 和 C-c 仍然会被 Emacs 处理；对于 M-x 你就得输入 C-x M-x 来实现了。
 你可以从 raw 字符模式转换到 line 模型来获得普通的 Emacs 行为（比如：移动光标周围这样你可以复制一些前面的输出）；直到你输入回车，没有东西会被发送给终端。
 
-想要获得帮助，你不能使用 C-h m 因为 C-h 被传给 shell 了（很可能意味着回退）。应该使用 f1， 或者通过名字调用 describe-mode 。
+想要获得帮助，你不能使用 C-h m 因为 C-h 被传给 shell 了（很可能意味着回退）。应该使用 f1，或者通过名字调用 describe-mode 。
 
 ## shell-command
 
 想要运行一次性的 shell 命令而不想打开一个完整的 shell 缓冲区的话，使用 shell-command （M-！）。
 
-M-! date RET
+    M-! date RET
 
 shell-command-on-region (M-|) 比较类似但是它是发送当前的选择区到 shell 命令的标准输入。
 让我们使用这招来计算 rl.c 的 main 函数的行数吧：
 
-切换到 rl.c 的缓冲区（使用 C-x b）。
+    切换到 rl.c 的缓冲区（使用 C-x b）。
 
-移动光标到 main 函数（通过 C-s 来搜索）。现在移动光标让它位于 main 函数的左花括号前。
+    移动光标到 main 函数（通过 C-s 来搜索）。现在移动光标让它位于 main 函数的左花括号前。
 
-按下 C-SPC 来设置标记。
+    按下 C-SPC 来设置标记。
 
-按下 C-M-f 来移动光标到对应的右花括号前面。现在选择区覆盖了 main 函数的整个方法体。
+    按下 C-M-f 来移动光标到对应的右花括号前面。现在选择区覆盖了 main 函数的整个方法体。
 
-M-| wc -l RET
+    M-| wc -l RET
 
 如果你忘记了这些命令的名字，输入 M-x shell TAB TAB。
 
-阅读 shell-command-on-region 的帮助。你可以通过按键绑定 (C-h k) 或者函数名字 (C-h f) 来查找到。
+    阅读 shell-command-on-region 的帮助。你可以通过按键绑定 (C-h k) 或者函数名字 (C-h f) 来查找到。
 
-这个帮助文档特别的长，但是重要信息都在顶部。无视代码系统那段，和一切关于非交互式的参数（这是关于从 lisp 脚本调用这个函数的，对应我们要使用的交互式调用）。
+这个帮助文档特别的长，但是重要信息都在顶部。无视编码系统那段，和一切关于非交互式的参数（就是关于从 lisp 脚本调用这个函数的，对应我们要使用的交互式调用）。
 
 The sentence “Prefix arg means replace the region with [the output of the shell command]” refers to providing a numeric argument to the command. You’ll remember numeric arguments from the tutorial. In this case the value of the argument doesn’t matter, so M-2 M-| or C-u M-| will do.
 
 
-试试看！
+    试试看！
 
-And now undo (C-/) what you’ve done to the buffer. Note the modeline indicator when the buffer has unsaved modifications.
-现在撤销 (C-/) 你在缓冲区做的事情。
+现在撤销 (C-/) 你在缓冲区做的事情。Note the modeline indicator when the buffer has unsaved modifications。
 
 ## sh-mode
 
