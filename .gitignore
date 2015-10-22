@@ -1,5 +1,1 @@
-/custom_theme
-/mkdocs.yml
-/site.txt
-/template
-*.markdown
+.DS_Store
