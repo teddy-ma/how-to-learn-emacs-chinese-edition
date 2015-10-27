@@ -11,4 +11,5 @@ github <https://github.com/drothlis/how-to-learn-emacs>。
 ## 如何构建本站
 
     bundle install
-    bundle exec asciidoctor -o index.html docs/emacs.asc
+    bundle exec asciidoctor-pdf-cjk-kai_gen_gothic-install #once
+    bundle exec rake
