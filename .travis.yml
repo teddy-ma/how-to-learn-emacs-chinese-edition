@@ -6,10 +6,12 @@ script:
 - git config --global user.name "Ma Lucheng"
 - git config --global push.default simple
 - bundle install
-- bundle exec asciidoctor -o index.html docs/emacs.asc
+- bundle exec asciidoctor-pdf-cjk-kai_gen_gothic-install
+- bundle exec rake
 - git remote add upstream "https://${GH_TOKEN}@github.com/teddy-ma/how-to-learn-emacs-chinese-edition.git"
 - git fetch upstream
 - git reset upstream/gh-pages
+- cp build/emacs/emacs/index.html .
 - git add -A .
 - git commit -m "update from travis"
 - git push -q upstream HEAD:gh-pages
