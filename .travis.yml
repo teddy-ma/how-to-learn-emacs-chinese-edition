@@ -13,6 +13,7 @@ script:
 - git reset upstream/gh-pages
 - cp build/how-to-learn-emacs-html/how-to-learn-emacs-html/index.html .
 - cp build/how-to-learn-emacs-pdf/how-to-learn-emacs-pdf.pdf .
+- rm -rf vendor
 - git add -A .
 - git commit -m "update from travis"
 - git push -q upstream HEAD:gh-pages
