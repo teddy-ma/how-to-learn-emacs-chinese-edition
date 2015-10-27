@@ -11,7 +11,8 @@ script:
 - git remote add upstream "https://${GH_TOKEN}@github.com/teddy-ma/how-to-learn-emacs-chinese-edition.git"
 - git fetch upstream
 - git reset upstream/gh-pages
-- cp build/emacs/emacs/index.html .
+- cp build/how-to-learn-emacs-html/how-to-learn-emacs-html/index.html .
+- cp build/how-to-learn-emacs-pdf/how-to-learn-emacs-pdf.pdf .
 - git add -A .
 - git commit -m "update from travis"
 - git push -q upstream HEAD:gh-pages
