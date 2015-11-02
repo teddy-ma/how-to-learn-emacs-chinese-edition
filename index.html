@@ -4,14 +4,14 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.2">
+<meta name="generator" content="Asciidoctor 1.5.3">
 <meta name="author" content="马陆骋">
 <title>如何学习 Emacs</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
-/* Remove the comments around the @import statement below when using this as a custom stylesheet */
-/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400";*/
+/* Remove comment around @import statement below when using as a custom stylesheet */
+/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700";*/
 article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}
 audio,canvas,video{display:inline-block}
 audio:not([controls]){display:none;height:0}
@@ -58,7 +58,6 @@ a:hover{cursor:pointer}
 img,object,embed{max-width:100%;height:auto}
 object,embed{height:100%}
 img{-ms-interpolation-mode:bicubic}
-#map_canvas img,#map_canvas embed,#map_canvas object,.map_canvas img,.map_canvas embed,.map_canvas object{max-width:none!important}
 .left{float:left!important}
 .right{float:right!important}
 .text-left{text-align:left!important}
@@ -66,10 +65,12 @@ img{-ms-interpolation-mode:bicubic}
 .text-center{text-align:center!important}
 .text-justify{text-align:justify!important}
 .hide{display:none}
-.antialiased,body{-webkit-font-smoothing:antialiased}
-img{display:inline-block;vertical-align:middle}
+body{-webkit-font-smoothing:antialiased}
+img,object,svg{display:inline-block;vertical-align:middle}
 textarea{height:auto;min-height:50px}
 select{width:100%}
+.center{margin-left:auto;margin-right:auto}
+.spread{width:100%}
 p.lead,.paragraph.lead>p,#preamble>.sectionbody>.paragraph:first-of-type p{font-size:1.21875em;line-height:1.6}
 .subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
 div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0;direction:ltr}
@@ -112,12 +113,14 @@ blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
 h1{font-size:2.75em}
 h2{font-size:2.3125em}
 h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
-h4{font-size:1.4375em}}table{background:#fff;margin-bottom:1.25em;border:solid 1px #dedede}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:solid 1px #dedede}
 table thead,table tfoot{background:#f7f8f7;font-weight:bold}
 table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
 table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
 table tr.even,table tr.alt,table tr:nth-of-type(even){background:#f8f8f7}
 table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
+body{tab-size:4}
 h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
 h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
 .clearfix:before,.clearfix:after,.float-group:before,.float-group:after{content:" ";display:table}
@@ -125,7 +128,7 @@ h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title str
 *:not(pre)>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background-color:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed}
 pre,pre>code{line-height:1.45;color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;text-rendering:optimizeSpeed}
 .keyseq{color:rgba(51,51,51,.8)}
-kbd{display:inline-block;color:rgba(0,0,0,.8);font-size:.75em;line-height:1.4;background-color:#f7f7f7;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em white inset;box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em #fff inset;margin:-.15em .15em 0 .15em;padding:.2em .6em .2em .5em;vertical-align:middle;white-space:nowrap}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background-color:#f7f7f7;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em white inset;box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em #fff inset;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
 .keyseq kbd:first-child{margin-left:0}
 .keyseq kbd:last-child{margin-right:0}
 .menuseq,.menu{color:rgba(0,0,0,.8)}
@@ -156,29 +159,33 @@ p a>code:hover{color:rgba(0,0,0,.9)}
 #toc ul.sectlevel0>li>a{font-style:italic}
 #toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
 #toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
 #toc a{text-decoration:none}
 #toc a:active{text-decoration:underline}
 #toctitle{color:#7a2518;font-size:1.2em}
 @media only screen and (min-width:768px){#toctitle{font-size:1.375em}
 body.toc2{padding-left:15em;padding-right:0}
 #toc.toc2{margin-top:0!important;background-color:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #efefed;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
-#toc.toc2 #toctitle{margin-top:0;font-size:1.2em}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
 #toc.toc2>ul{font-size:.9em;margin-bottom:0}
 #toc.toc2 ul ul{margin-left:0;padding-left:1em}
 #toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
 body.toc2.toc-right{padding-left:0;padding-right:15em}
-body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #efefed;left:auto;right:0}}@media only screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #efefed;left:auto;right:0}}
+@media only screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
 #toc.toc2{width:20em}
 #toc.toc2 #toctitle{font-size:1.375em}
 #toc.toc2>ul{font-size:.95em}
 #toc.toc2 ul ul{padding-left:1.25em}
-body.toc2.toc-right{padding-left:0;padding-right:20em}}#content #toc{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
 #content #toc>:first-child{margin-top:0}
 #content #toc>:last-child{margin-bottom:0}
 #footer{max-width:100%;background-color:rgba(0,0,0,.8);padding:1.25em}
 #footer-text{color:rgba(255,255,255,.8);line-height:1.44}
 .sect1{padding-bottom:.625em}
-@media only screen and (min-width:768px){.sect1{padding-bottom:1.25em}}.sect1+.sect1{border-top:1px solid #efefed}
+@media only screen and (min-width:768px){.sect1{padding-bottom:1.25em}}
+.sect1+.sect1{border-top:1px solid #efefed}
 #content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
 #content h1>a.anchor:before,h2>a.anchor:before,h3>a.anchor:before,#toctitle>a.anchor:before,.sidebarblock>.content>.title>a.anchor:before,h4>a.anchor:before,h5>a.anchor:before,h6>a.anchor:before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
 #content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
@@ -207,7 +214,9 @@ table.tableblock #preamble>.sectionbody>.paragraph:first-of-type p{font-size:inh
 .sidebarblock .literalblock pre,.sidebarblock .listingblock pre:not(.highlight),.sidebarblock .listingblock pre[class="highlight"],.sidebarblock .listingblock pre[class^="highlight "],.sidebarblock .listingblock pre.CodeRay,.sidebarblock .listingblock pre.prettyprint{background:#f2f1f1}
 .literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{-webkit-border-radius:4px;border-radius:4px;word-wrap:break-word;padding:1em;font-size:.8125em}
 .literalblock pre.nowrap,.literalblock pre[class].nowrap,.listingblock pre.nowrap,.listingblock pre[class].nowrap{overflow-x:auto;white-space:pre;word-wrap:normal}
-@media only screen and (min-width:768px){.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{font-size:.90625em}}@media only screen and (min-width:1280px){.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{font-size:1em}}.literalblock.output pre{color:#f7f7f8;background-color:rgba(0,0,0,.9)}
+@media only screen and (min-width:768px){.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{font-size:.90625em}}
+@media only screen and (min-width:1280px){.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{font-size:1em}}
+.literalblock.output pre{color:#f7f7f8;background-color:rgba(0,0,0,.9)}
 .listingblock pre.highlightjs{padding:0}
 .listingblock pre.highlightjs>code{padding:1em;-webkit-border-radius:4px;border-radius:4px}
 .listingblock pre.prettyprint{border-width:0}
@@ -217,7 +226,7 @@ table.tableblock #preamble>.sectionbody>.paragraph:first-of-type p{font-size:inh
 .listingblock.terminal pre .command:before{content:attr(data-prompt);padding-right:.5em;color:#999}
 .listingblock.terminal pre .command:not([data-prompt]):before{content:"$"}
 table.pyhltable{border-collapse:separate;border:0;margin-bottom:0;background:none}
-table.pyhltable td{vertical-align:top;padding-top:0;padding-bottom:0}
+table.pyhltable td{vertical-align:top;padding-top:0;padding-bottom:0;line-height:1.45}
 table.pyhltable td.code{padding-left:.75em;padding-right:0}
 pre.pygments .lineno,table.pyhltable td:not(.code){color:#999;padding-left:0;padding-right:.5em;border-right:1px solid #ddddd8}
 pre.pygments .lineno{display:inline-block;margin-right:.25em}
@@ -238,13 +247,12 @@ table.pyhltable .linenodiv{background:none!important;padding-right:0!important}
 .verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
 .quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
 .quoteblock .attribution br,.verseblock .attribution br{display:none}
-.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.05em;color:rgba(0,0,0,.6)}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
 .quoteblock.abstract{margin:0 0 1.25em 0;display:block}
 .quoteblock.abstract blockquote,.quoteblock.abstract blockquote p{text-align:left;word-spacing:0}
 .quoteblock.abstract blockquote:before,.quoteblock.abstract blockquote p:first-of-type:before{display:none}
 table.tableblock{max-width:100%;border-collapse:separate}
 table.tableblock td>.paragraph:last-child p>p:last-child,table.tableblock th>p:last-child,table.tableblock td>p:last-child{margin-bottom:0}
-table.spread{width:100%}
 table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
 table.grid-all th.tableblock,table.grid-all td.tableblock{border-width:0 1px 1px 0}
 table.grid-all tfoot>tr>th.tableblock,table.grid-all tfoot>tr>td.tableblock{border-width:1px 1px 0 0}
@@ -290,8 +298,8 @@ ol.upperroman{list-style-type:upper-roman}
 ol.lowergreek{list-style-type:lower-greek}
 .hdlist>table,.colist>table{border:0;background:none}
 .hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
-td.hdlist1{padding-right:.75em;font-weight:bold}
-td.hdlist1,td.hdlist2{vertical-align:top}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
 .literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
 .colist>table tr>td:first-of-type{padding:0 .75em;line-height:1}
 .colist>table tr>td:last-of-type{padding:.25em 0}
@@ -304,13 +312,14 @@ td.hdlist1,td.hdlist2{vertical-align:top}
 .image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
 .image.left{margin-right:.625em}
 .image.right{margin-left:.625em}
-a.image{text-decoration:none}
-span.footnote,span.footnoteref{vertical-align:super;font-size:.875em}
-span.footnote a,span.footnoteref a{text-decoration:none}
-span.footnote a:active,span.footnoteref a:active{text-decoration:underline}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
 #footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
 #footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em 0;border-width:1px 0 0 0}
-#footnotes .footnote{padding:0 .375em;line-height:1.3;font-size:.875em;margin-left:1.2em;text-indent:-1.2em;margin-bottom:.2em}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;text-indent:-1.05em;margin-bottom:.2em}
 #footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none}
 #footnotes .footnote:last-of-type{margin-bottom:0}
 #content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
@@ -368,11 +377,10 @@ span.icon>.fa{cursor:default}
 pre .conum[data-value]{position:relative;top:-.125em}
 b.conum *{color:inherit!important}
 .conum:not([data-value]):empty{display:none}
-h1,h2{letter-spacing:-.01em}
-dt,th.tableblock,td.content{text-rendering:optimizeLegibility}
-p,td.content{letter-spacing:-.01em}
-p strong,td.content strong{letter-spacing:-.005em}
-p,blockquote,dt,td.content{font-size:1.0625rem}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,span.alt{font-size:1.0625rem}
 p{margin-bottom:1.25rem}
 .sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
 .exampleblock>.content{background-color:#fffef7;border-color:#e0e0dc;-webkit-box-shadow:0 1px 4px #e0e0dc;box-shadow:0 1px 4px #e0e0dc}
@@ -383,9 +391,9 @@ a{color:inherit!important;text-decoration:underline!important}
 a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
 a[href^="http:"]:not(.bare):after,a[href^="https:"]:not(.bare):after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
 abbr[title]:after{content:" (" attr(title) ")"}
-pre,blockquote,tr,img{page-break-inside:avoid}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
 thead{display:table-header-group}
-img{max-width:100%!important}
+svg{max-width:100%}
 p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
 h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
 #toc,.sidebarblock,.exampleblock>.content{background:none!important}
@@ -409,7 +417,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 .hide-for-print{display:none!important}
 .show-for-print{display:inherit!important}}
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
@@ -426,6 +434,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_安装正确的emacs">安装正确的Emacs</a></li>
 <li><a href="#_基础知识">基础知识</a></li>
 <li><a href="#_基本的_unix_c_工作流">基本的 Unix/C 工作流</a></li>
+<li><a href="#_常用自定义选项">常用自定义选项</a></li>
 <li><a href="#_info_文档">Info 文档</a></li>
 <li><a href="#_为_emacs_作贡献">为 Emacs 作贡献</a></li>
 <li><a href="#_人体工程学">人体工程学</a></li>
@@ -472,7 +481,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect2">
 <h3 id="_emacs_vs_em_em">Emacs vs. <em>_</em></h3>
 <div class="paragraph">
-<p>"写一个 Eclipse 或者 Intellij （或者 Visual Studio）的插件是非常困难的，所以几乎没有人这样做。这意味着没有构建和自定义你自己的工具的社区 。。。更有甚者，创建一个插件的高难度导致人们只做有真正重大意义的程序，然而在 Emacs 中，一个『插件』可以是任何大小，从一行代码到一个巨大的系统和框架 <span class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</span>"</p>
+<p>"写一个 Eclipse 或者 Intellij （或者 Visual Studio）的插件是非常困难的，所以几乎没有人这样做。这意味着没有构建和自定义你自己的工具的社区 。。。更有甚者，创建一个插件的高难度导致人们只做有真正重大意义的程序，然而在 Emacs 中，一个『插件』可以是任何大小，从一行代码到一个巨大的系统和框架 <sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup>"</p>
 </div>
 <div class="paragraph">
 <p>当然，有很多合情合理的理由 <strong>不去</strong> 学习 Emacs。如果你几乎只做 Java，Windows/.NET 或者 OS X/iOS 编程，那就有足够的理由使用 Eclipse/Intellij，Visual Studio，或者 XCode。你肯定会在使用IDE的特性方面获得更多的经验。</p>
@@ -638,7 +647,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sectionbody">
 <div class="paragraph">
 <p>本章使用了 GUN Radline 库的源码来作为操作的例子。
-你可以通过命令 <code>git clone git://git.savannah.gnu.org/readline.git</code> <span class="footnote">[<a id="_footnoteref_2" class="footnote" href="#_footnote_2" title="View footnote.">2</a>]</span> 来获取它，
+你可以通过命令 <code>git clone git://git.savannah.gnu.org/readline.git</code> <sup class="footnote">[<a id="_footnoteref_2" class="footnote" href="#_footnote_2" title="View footnote.">2</a>]</sup> 来获取它，
 或者也可以使用你自己的 C 或者 C++ 代码。</p>
 </div>
 <div class="sect2">
@@ -678,7 +687,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </table>
 </div>
 <div class="paragraph">
-<p>这会创建一个新的缓冲区来运行环境变量指定的 shell。<span class="footnote">[<a id="_footnoteref_3" class="footnote" href="#_footnote_3" title="View footnote.">3</a>]</span> 这个缓冲区被称为 <strong>shell</strong> (星号是名字的一部分, 所以你不得不在使用 <code>C-x b</code> 切换时输入它们)。</p>
+<p>这会创建一个新的缓冲区来运行环境变量指定的 shell。<sup class="footnote">[<a id="_footnoteref_3" class="footnote" href="#_footnote_3" title="View footnote.">3</a>]</sup> 这个缓冲区被称为 <strong>shell</strong> (星号是名字的一部分, 所以你不得不在使用 <code>C-x b</code> 切换时输入它们)。</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -739,7 +748,7 @@ make</code></pre>
 <p>指出如何发送信号(比如: C-c) 给 shell。(提示：搜索帮助缓冲区的内容，关键字 "interrupt" 和 "stop")</p>
 </div>
 <div class="paragraph">
-<p>指出 C-M-l(字母 l, 不是1) 和 C-c C-s 是做什么的 (这些都是在运行一个 shell 命令产出大量的输出时很有用的) <span class="footnote">[<a id="_footnoteref_4" class="footnote" href="#_footnote_4" title="View footnote.">4</a>]</span></p>
+<p>指出 C-M-l(字母 l, 不是1) 和 C-c C-s 是做什么的 (这些都是在运行一个 shell 命令产出大量的输出时很有用的) <sup class="footnote">[<a id="_footnoteref_4" class="footnote" href="#_footnote_4" title="View footnote.">4</a>]</sup></p>
 </div>
 </td>
 </tr>
@@ -1033,7 +1042,7 @@ M-! date RET
 <div class="sect2">
 <h3 id="_rgrep">rgrep</h3>
 <div class="paragraph">
-<p>为了搜索所有的文档中的一个字符串（或者正则表达式）, 使用 rgrep <span class="footnote">[<a id="_footnoteref_5" class="footnote" href="#_footnote_5" title="View footnote.">5</a>]</span> 这输出一个 matches 在一个新的缓冲区中，你可以导航就像编辑缓冲区(事实上, grep-mode 从 compilation-mode 继承了它的函数和按键绑定）。</p>
+<p>为了搜索所有的文档中的一个字符串（或者正则表达式）, 使用 rgrep <sup class="footnote">[<a id="_footnoteref_5" class="footnote" href="#_footnote_5" title="View footnote.">5</a>]</sup> 这输出一个 matches 在一个新的缓冲区中，你可以导航就像编辑缓冲区(事实上, grep-mode 从 compilation-mode 继承了它的函数和按键绑定）。</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -1339,7 +1348,7 @@ rl.c 大概已经有了很大的变化了. 调用 vc-revert 来撤销到仓库�
 </table>
 </div>
 <div class="paragraph">
-<p>只要你没有引入任何错误到任何源文件中, 编译应该是成功的. <span class="footnote">[<a id="_footnoteref_6" class="footnote" href="#_footnote_6" title="View footnote.">6</a>]</span>
+<p>只要你没有引入任何错误到任何源文件中, 编译应该是成功的. <sup class="footnote">[<a id="_footnoteref_6" class="footnote" href="#_footnote_6" title="View footnote.">6</a>]</sup>
 如果有错误, 你知道该如何回滚.</p>
 </div>
 <div class="admonitionblock tip">
@@ -1398,6 +1407,172 @@ frame 1</p>
 </div>
 <div class="paragraph">
 <p>作为你学习 Emacs 的承诺之一, 尽量的尝试在 Emacs 中运行你的 shell.(如果你需要帮助来配置你的 shell 能在 Emacs 中工作, 或者配置 Emacs 来很好的在你的 shell 中工作, 我们将会重读 shell-mode 在 General customization”章节.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_常用自定义选项">常用自定义选项</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_ido_mode">ido-mode</h3>
+<div class="paragraph">
+<p>其他的编辑器和 IDE 们有好看的文件夹和文件的树状视图，也有 tabs 来在缓冲区之间切换。
+Emacs 有一个比较丑陋的树形视图 M-x speedbar。如果你想要看看有多丑的话。
+但是真正的 Emacs 的答案去在大型项目中导航是 ido 模式。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-elisp" data-lang="elisp">init.el
+(ido-mode 1)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>ido 模式重新绑定了 find-file 和 switch-to-buufer 的按键为更强大的版本。
+你只需要输入文件或者缓冲区的名字的一些字母（不必一定是名字的开头，也不必一定是相邻的字母）。
+一个符合的列表，按照最近使用的排序，就会显示在 minibuffer 中；使用左右箭头（或者 C-s 和 C-r）
+来在符合的列表中导航。如果没有项目的项目，在一个简明的（客配置）的暂停后，ido 会从之前使用的目录中搜索。</p>
+</div>
+<div class="paragraph">
+<p>因为回车会打开第一个符合的文件，想要打开一个目录你需要使用 C-d。或者你可以使用 C-f（在 ido-find-file 提示下）来进入普通的 find-file</p>
+</div>
+<div class="paragraph">
+<p>ido 和 Emacs 和搭配但是在手册中没有出现过；阅读 ido-file-file 的在线帮助。
+想知道更多细节和配置说明，使用 C-h f ido-mode 来找到它的 elisp 实现，
+并且阅读 elisp 文件的很长的开头注释。</p>
+</div>
+<div class="paragraph">
+<p>Emacs 用户倾向于在使用完缓冲区后还是让它们保持打开状态，然后过了一段时间有了上百个打开的缓冲区
+那么 ido-switch-buffer 就变成了有效的 『在项目中找到文件』。</p>
+</div>
+<div class="paragraph">
+<p>要保存你的打开文件列表在不同的 Emacs 调用之间，或者分别管理不同套的打开文件（如果你同时工作在多个项目之间），
+查看 Emacs 手册中的『保存 Emacs 会话』。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_朴素简约">朴素简约</h3>
+<div class="paragraph">
+<p>想要最大化你的屏幕空间，考虑一下禁用工具栏和滚动条：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-elisp" data-lang="elisp">init.el
+(tool-bar-mode -1)
+(scroll-bar-mode -1)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>类似的，你可以禁用菜单栏（menu-bar-mode -1），所让我觉得菜单栏在探索 Emacs 的特性时很有用；
+主模式和辅模式常常会把它们自己的菜单加到菜单栏中。正如前面提到的，你肯定不应该在 OS X 中禁用菜单栏；
+如果你想要在不同的环境中共享 Emacs 的初始化文件，你可以根据变量 system-type 和 window-system 来
+有选择性的禁用菜单栏。</p>
+</div>
+<div class="paragraph">
+<p>有一些命令比如 revert-buffer 会强制你通过输入 yes 来确认；
+如果可以只输入 y 来确认那想必是极好的。
+如果你查看 revert-buffer 的定义你会发现它调用了 yes-or-no-p, 你可以重定义为 y-or-n-p：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-elisp" data-lang="elisp">(defun yes-or-no-p (prompt)
+  (y-or-n-p prompt))</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>或者更简单</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-elisp" data-lang="elisp">(defalias 'yes-or-no-p 'y-or-n-p)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>另一件事人们在安装好之后就会做的就是阻止 Emacs 的自动保存一个 ~ 开头的备份文件：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-elisp" data-lang="elisp">(setq make-backup-files nil)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>应该使用你的版本控制工具来备份。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_在_emacs_lisps_之间导航">在 Emacs Lisps 之间导航</h3>
+<div class="paragraph">
+<p>在前面几章中我已经鼓励你来探索 Emasc 的功能通过直接学习 elisp 代码。
+为了让这个工作更容易，我们已经看到了 show-paren-mode 和 eldoc-mode;
+让我们在全局启用它们因为我们在其他编程语言中也用得上。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-elisp" data-lang="elisp">(show-paren-mode 1)
+(eldoc-mode 1)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>我们也重新绑定了 M-。从它原本的 find-tag 到 find-function-at-point，但是仅仅对用 elisp 文件而言，
+因为你不需要一个 tags 的 table 因为 Emacs 已经知道了所有它已经加载的 elisp 函数。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-elisp" data-lang="elisp">(define-key emacs-lisp-mode-map
+  (kbd "M-.") 'find-function-at-point)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果你计划写很多 Lisp 的话，paredit-mode 总是能让你的括号对等，对于重构时的大范围移动也很有用。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_shell_2">shell</h3>
+<div class="paragraph">
+<p>如果你尝试过运行一个程序比如 git 在 M-x shell 下，你会看到一个警告 『terminal is not fully functional』
+在不能使用的行为之后。因为 git 发送了它的输出通过一个分页（通常是 less），这需要一个真正的终端模拟器。</p>
+</div>
+<div class="paragraph">
+<p>设定 PAGER 环境变量到 /bin/cat （但是仅仅在 Emacs 中这样）能解决这个问题：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-elisp" data-lang="elisp">init.el
+(setenv "PAGER" "/bin/cat")</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>这也能让你在 M-x grep 中使用 git grep。</p>
+</div>
+<div class="paragraph">
+<p>确保你不会覆盖 PAGER 在你的 ~/.gitconfig 文件或者 GIT_PAGER 环境变量中（和 man 程序的 MANPAGER 等等).</p>
+</div>
+<div class="paragraph">
+<p>如果你需要在你的 ~/.bashrc 文件(或你选择的shell相符的配置文件)中自定义，你可以在环境变量 INSIDE_EMACS 中测试 。
+参考手册如何配置 Emacs 使用的 shell。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_其它想法">其它想法</h3>
+<div class="paragraph">
+<p>其他的你可能想做的自定义被 Emacs 手册包含了：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="http://www.gnu.org/software/emacs/manual/html_node/emacs/Minor-Modes.html">Minor Modes</a>.</p>
+</li>
+<li>
+<p><a href="http://www.gnu.org/software/emacs/manual/html_node/emacs/Uniquify.html">Making Buffer Names Unique</a>.</p>
+</li>
+<li>
+<p><a href="http://www.gnu.org/software/emacs/manual/html_node/emacs/Cursor-Display.html">Displaying The Cursor (in particular global-hl-line-mode)</a>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>你可以查看其他人的初始化文件来获得更多的灵感，在 <a href="http://www.emacswiki.org/emacs/CategoryDotEmacs">Emacs wiki</a> 和http://sites.google.com/site/steveyegge2/my-dot-emacs-file[因特网上有很多]。
+一些我体积的自定义配置来自 <a href="http://github.com/technomancy/emacs-starter-kit">Emacs Starter Kit</a>, 一个 elisp 文件的集合用来提供 『一系列你平常使用 Emacs 更舒服的默认配置』。</p>
 </div>
 </div>
 </div>
@@ -1576,7 +1751,7 @@ M-x find-function ido-find-file.
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-使用 diff -cp ido.el.orig ido.el 生成一个补丁 <span class="footnote">[<a id="_footnoteref_7" class="footnote" href="#_footnote_7" title="View footnote.">7</a>]</span>
+使用 diff -cp ido.el.orig ido.el 生成一个补丁 <sup class="footnote">[<a id="_footnoteref_7" class="footnote" href="#_footnote_7" title="View footnote.">7</a>]</sup>
 </td>
 </tr>
 </table>
@@ -1585,7 +1760,7 @@ M-x find-function ido-find-file.
 <div class="sect2">
 <h3 id="_创建一个_21_世纪的补丁">创建一个 21 世纪的补丁</h3>
 <div class="paragraph">
-<p><span class="footnote">[<a id="_footnoteref_8" class="footnote" href="#_footnote_8" title="View footnote.">8</a>]</span></p>
+<p><sup class="footnote">[<a id="_footnoteref_8" class="footnote" href="#_footnote_8" title="View footnote.">8</a>]</sup></p>
 </div>
 <div class="paragraph">
 <p>理想情况下你最好直接给最新的(未发布)的 Emacs 源码版本打补丁，而不是当前的 release 版。
@@ -1636,7 +1811,7 @@ git pull --rebase</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p><span class="footnote">[<a id="_footnoteref_9" class="footnote" href="#_footnote_9" title="View footnote.">9</a>]</span></p>
+<p><sup class="footnote">[<a id="_footnoteref_9" class="footnote" href="#_footnote_9" title="View footnote.">9</a>]</sup></p>
 </div>
 </div>
 <div class="sect2">
@@ -1994,7 +2169,7 @@ Control 和 Meta 键上，也有 OS X 的键位绑定在 Command 键上。</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-11-01 05:52:27 UTC
+Last updated 2015-11-02 08:09:53 UTC
 </div>
 </div>
 </body>
