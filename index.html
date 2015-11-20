@@ -434,6 +434,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_安装正确的emacs">安装正确的Emacs</a></li>
 <li><a href="#_基础知识">基础知识</a></li>
 <li><a href="#_基本的_unix_c_工作流">基本的 Unix/C 工作流</a></li>
+<li><a href="#_cc_模式的自定义">cc 模式的自定义</a></li>
+<li><a href="#_修复那个糟糕的配色方案">修复那个糟糕的配色方案</a></li>
 <li><a href="#_常用自定义选项">常用自定义选项</a></li>
 <li><a href="#_info_文档">Info 文档</a></li>
 <li><a href="#_为_emacs_作贡献">为 Emacs 作贡献</a></li>
@@ -1412,6 +1414,1251 @@ frame 1</p>
 </div>
 </div>
 <div class="sect1">
+<h2 id="_cc_模式的自定义">cc 模式的自定义</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>我应该带领你了解 Emacs，Emacs Lisp 的关系，和 CC 模式的手册，但是它们是那么的。。。长！
+Emacs手册的目录都比我们的前一章 "Unix/c workflow" 要长。
+<sup class="footnote">[<a id="_footnoteref_7" class="footnote" href="#_footnote_7" title="View footnote.">7</a>]</sup></p>
+</div>
+<div class="paragraph">
+<p>然而我会向你展示我是如何尝试去发现我需要的信息在Emacs的源码中的（谢天谢地，大多数都是lisp而不是C）。
+我刚才贬低的手册是非常有用的。因为一个开源的项目有这么广泛的文档是非常棒的！
+但是一页一页的阅读这些手册是不可能的；你必须学会如何有效的找到正确的信息。
+我们已经涉及到了基础的工具，现在我们需要更多的练习。</p>
+</div>
+<div class="paragraph">
+<p>顺便说一下， c-mode, c++-mode, objc-mode, java-mode，和其他一些名字都是 cc－mode 的别名，
+只是需要一些微小的配置修改来支持它们各自的语言。从现在开始我会使用 cc-mode 这个名字。</p>
+</div>
+<div class="sect2">
+<h3 id="_房子编码风格">房子编码风格</h3>
+<div class="paragraph">
+<p>你喜欢缩进2个，3个，4个，还是8个空格，或者使用 tab？
+一个 tab 是多大？无论你喜欢什么样的，我想都不是 cc-mode 默认提供的那样，所以我们可以试试去改变它。</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+访问(打开)一个 C 或者 C++ 文件 (你可以使用 reading/example/rl.c 在前面的章节)
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>在任何地方按下 TAB 来根据当前的缩进规则达到缩进的位置（要插入一个字面tab，使用 C-q 也称 quoted-insert）</p>
+</div>
+<div class="paragraph">
+<p>让我们看看 Emacs 在我们按下 TAB 时在后台做了什么:</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>C-h k TAB</p>
+</div>
+<div class="paragraph">
+<p>TAB 运行了命令 c-indent-line-or-region, 这是一个交互的被编译的 Lisp 函数在 <code>cc-cmds.el</code> 中.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>如果你没有看到 cc-cmds.el 的链接, 说明你没有安装 elisp 的源码.
+使用你的系统包管理工具去安装 emacs-el 包并再次尝试.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>跟随 cc-cmds.el 的链接. 这会把你定位到 c-indent-line-or-region 被定义的地方.
+如果有必要, 把整个定义带到视图中 (C-M-l).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-elisp" data-lang="elisp">(defun c-indent-line-or-region (&amp;optional arg region)
+  "Indent active region, current line, or block starting on this line.
+In Transient Mark mode, when the region is active, reindent the region.
+Otherwise, with a prefix argument, rigidly reindent the expression
+starting on the current line.
+Otherwise reindent just the current line."
+  (interactive
+   (list current-prefix-arg (use-region-p)))
+  (if region
+      (c-indent-region (region-beginning) (region-end))
+    (c-indent-command arg)))</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_emergency_elisp">Emergency elisp</h3>
+<div class="paragraph">
+<p>关于上面的代码有一句题外话需要解释一下. 让我们从结尾处的 if 条件开始:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-elisp" data-lang="elisp">  (if region
+      (c-indent-region (region-beginning) (region-end))
+    (c-indent-command arg)))</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>让我们把它简化一下:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-elisp" data-lang="elisp">  (if region
+      a
+    b)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果你还是不知道这意味着什么, 就当它是一个函数吧, 然后它看上去就像这样:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-elisp" data-lang="elisp">  if(region, a, b)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>移动圆括号到函数的左边大概是 Lisp 被世界接受的最大的障碍.[2]</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+参数部分的 a 和 b 是什么意思? 猜猜看, 可以用 C-h f if 来查看答案.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>COND, THEN 和 ELSE 的定义是非常清楚的. 但是 “if is a special form” 是什么意思?</p>
+</div>
+<div class="paragraph">
+<p>这会证明它是否是一个常规的函数. elisp 对于"普通"形式的赋值-"形式"意味着给一个"形状"加上括号, 就像
+(a b c) 或者 (a b (cd)) - 就是给每个参数赋值.</p>
+</div>
+<div class="paragraph">
+<p>让我们假设函数 + (elisp 没有特殊操作符, 所以 + 只是一个函数而已). 如果 x 是一个变量包含值 5, 而 y 是一个变量包含值 2,
+那么下面的两个表达式是等同的.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-elisp" data-lang="elisp">  (+ x y)
+  (+ 5 2)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>函数 + 看不懂 x, 它只看到 5.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+对表达式 (+ 5 2) 求值: 切换到 <strong>scratch</strong> 缓冲区, 输入 (+ 5 2) 在它自己的一行中, 然后按下 C-M-x 来求值表达式并且显示结果在 echo area 中.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>在表达式的第一个元素 (这里指 +) 也被求值了. + 实际上是一个变量, 它的值就是给数字做加法的函数.</p>
+</div>
+<div class="paragraph">
+<p>Anyway, back to if. if is a “special” form, which means that the elisp interpreter treats if as a special case. Upon reflection, it is obvious that the normal function evaluation rules are not suitable for if: We wouldn’t want to evaluate ELSE, with its possible side-effects, when COND is “true” (non-nil).
+好了, 回到 if. if 是一个 "特殊" 的表达式, 它的意思是 elisp 的解释器会把 if 当做一种特殊的情况. 考虑一下, 很明显普通的函数求值规则不适合它: 我们不会想要去求值 ELSE,
+和它的特殊副作用, 当 COND 是 "true" 是( non-nil ).</p>
+</div>
+<div class="paragraph">
+<p>这些都再 Emacs Lisp 的手册里有解释:</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>C-h S if</p>
+</div>
+<div class="paragraph">
+<p>In the <strong>info</strong> buffer press i (for index) and enter special forms.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Go back to the cc-cmds.el.gz buffer.</p>
+</div>
+<div class="paragraph">
+<p>Enable the eldoc minor mode (M-x eldoc-mode). Now positioning the point over the if statement will show some brief documentation in the echo area.</p>
+</div>
+<div class="paragraph">
+<p>Enable show-paren-mode too. This should help clarify where the THEN and ELSE clauses begin and end.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Now, back up to the defun:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-elisp" data-lang="elisp">(defun c-indent-line-or-region (&amp;optional arg region)
+  "Indent active region, current line, or block starting on this line.
+In Transient Mark mode, when the region is active, reindent the region.
+Otherwise, with a prefix argument, rigidly reindent the expression
+starting on the current line.
+Otherwise reindent just the current line."
+  (interactive
+   (list current-prefix-arg (use-region-p)))
+  (if region
+      (c-indent-region (region-beginning) (region-end))
+    (c-indent-command arg)))</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+你有三种方法在 defun 上获得帮助: eldoc’s summary in the echo area, the reference provided by C-h f, and the more comprehensive Info manual at C-h S. Take your pick.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>如果你发现了单词 "lambda", 这和 javascript 中的匿名函数中的关键字 "function" 是一个意思.</p>
+</div>
+<div class="paragraph">
+<p>重要的事情说三遍:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>defun 定义了一个函数的名字.</p>
+</li>
+<li>
+<p>ARGLIST 函数的一个参数列表. 在 elisp 中, 一个 list 是由闭合的括号包住的.</p>
+</li>
+<li>
+<p>ARGLIST is a list of arguments for the function. In elisp, a list is enclosed in parens: (a b c). In this case it isn’t evaluated as a function call, because defun is a special form that treats this particular list in a special way. When defuning a function that takes no arguments, ARGLIST would be the empty list ().</p>
+</li>
+<li>
+<p>The optional DOCSTRING is used by the C-h f help system (yes, even for functions you define yourself!).</p>
+</li>
+<li>
+<p>BODY is one or more lists that are evaluated when you call the function.</p>
+</li>
+<li>
+<p>…except for the (interactive &#8230;&#8203;) form.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+C-h S interactive
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>不要被解析陷得太深; 阅读一两段就够了.
+学习只找到你需要的信息, 不然你很容易就会淹没.
+现在我们不需要知道如何使用交互式终端, 只要知道它的意义.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_configuring_indentation">Configuring indentation</h3>
+<div class="paragraph">
+<p>So. c-indent-line-or-region is a function that optionally takes arguments arg and region, which, when the function is called interactively (for example by pressing TAB), are set to the prefix argument (if specified with C-u or similar) and “true” if the region is active.</p>
+</div>
+<div class="paragraph">
+<p>Right now we care about indentation when operating not on the region but on a single line (i.e. region is nil), so let’s look at the ELSE clause:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-elisp" data-lang="elisp">  (if region
+      (c-indent-region (region-beginning) (region-end))
+    (c-indent-command arg))</code></pre>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Use find-function to jump to the definition of c-indent-command.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>这是一个又长又吓人的函数, 但是幸运地是它有着很好地文档.
+现在我们知道了这个函数的名字, 我们可以在帮助缓冲区中查看同样地文档, 使用 C-h f c-indent-command.</p>
+</div>
+<div class="paragraph">
+<p>文档提到了两个有趣的变量: c-basic-offset 和 indent-tabs-mode.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+C-h v c-basic-offset
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>谈论了变量  “buffer-local” 和 “file local” . 什么?</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+C-h S buffer-local
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+From the elisp Info node for Buffer-Local Variables, search for “file local” (you can use C-s or the index i).
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>正如你所见, 有时候需要尝试不同的搜索来找到正确地信息.
+“Buffer-local” 正好在索引中, 所以符号搜索 (C-h S) 可以找到它;
+“File local” 有一个空格, 但是符号搜索不允许有空格,
+搜索你不得不在 Info 缓冲区中搜索.
+你也可以从 “Buffer-Local Variables” Info 节点网上扫描到 “Variables” table of contents.</p>
+</div>
+<div class="paragraph">
+<p>让我看看当前的 c-basic-offset 的值:</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Switch to buffer rl.c (c-basic-offset is buffer-local, so it matters which buffer we’re in).</p>
+</div>
+<div class="paragraph">
+<p>M-x eval-expression RET c-basic-offset RET</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>现在改变它为 4:</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>M-x set-variable c-basic-offset 4</p>
+</div>
+<div class="paragraph">
+<p>Find a line to re-indent and press TAB.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Repeat the same investigation with variable indent-tabs-mode.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_setting_variables_from_elisp_code">Setting variables from elisp code</h3>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Switch to the <strong>scratch</strong> buffer.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>; 开头的就是注释.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Type in this form and evaluate it with C-M-x: (set indent-tabs-mode nil)
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>你触发了一个错误, 然后 Emacs 在 elisp debugger 中提出了回溯.</p>
+</div>
+<div class="paragraph">
+<p>你尝试给 nil 设置一个常亮, 这当然是一个错误.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+使用你之前对于 indent-tabs-mode 和 elipse 对函数求值的知识来解释这是为什么.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>我们可以把变量的名字括起来这样它就不会被求值了:</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+(set 'indent-tabs-mode nil)
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Read more about quoting:</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>C-h S quote</p>
+</div>
+<div class="paragraph">
+<p>C-h S setq</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following forms do exactly the same; the preferred form is setq.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-elisp" data-lang="elisp">(set 'indent-tabs-mode nil)
+(set (quote indent-tabs-mode) nil)
+(setq indent-tabs-mode nil)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>最后一件事: indent-tabs-mode 是 buffer-local,
+所以在这里设置它只对 <strong>scratch</strong> 缓冲区有影响.
+要让改变全局生效, 你必须使用 setq-default.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_init_file">Init file</h3>
+<div class="paragraph">
+<p>在你重启 Emacs 后你对这些变量的改变会丢失.
+你需要把你的设定放在一个初始化文件中这样 Emacs 就会在每次启动时加载它.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+In the Emacs manual (C-h r) table of contents, search for “init file” and read the first paragraph.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>有几个地方你可以放置你的初始化文件;
+我建议的地方是 ~/.emacs.d 文件夹,
+这样你就可以通过同一目录下不同的 elisp 文件在组织管理你的自定义设置,
+并且在主初始文件中加载它们. 把它们纳入版本控制.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+访问(打开)你选择的初始化文件(如果文件不存在, Emacs 会创建它如果你保存了缓冲区).
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Add the following lines:</p>
+</div>
+<div class="paragraph">
+<p>(setq-default c-basic-offset 4)
+(setq-default indent-tabs-mode nil)</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>(或任何你选择的值).</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Restart Emacs, visit rl.c, and verify that your settings are in effect.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_钩子">钩子</h3>
+<div class="paragraph">
+<p>默认情况下，cc 模式会自动重新缩进行当你输入一个字符比如 ; 或者 } 时。
+这些被成为 “electric characters” 不过你可以禁用这个行为在一个特定的缓冲罐你去中
+使用  c-toggle-electric-state (C-c C-l)。</p>
+</div>
+<div class="paragraph">
+<p>想要总是禁用 electric characters 我们可以让 Emacs 每次加载 cc 模式时
+调用 c-toggle-electric-state。</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+C-h m （从 rl.c 缓冲区， 或任何其他 cc 模式的缓冲区）来找出 cc 模式提供的钩子的名字。
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>一个钩子是一个变量包含一个要去运行的函数的列表，通常是一个特定编辑模式的入口。
+对于 C 语言的代码我们有两个钩子：一个是所有被 cc 模式支持的语言，另一个仅仅对于 C 语言。
+我们将会使用第一个， c-mode-common-hook。</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Add the following to your init file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-elisp" data-lang="elisp">(defun my-disable-electric-indentation ()
+  "Stop ';', '}', etc. from re-indenting the current line."
+  (c-toggle-electric-state -1))
+(add-hook 'c-mode-common-hook 'my-disable-electric-indentation)</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>首先我们定义了一个无参函数并且调用 (c-toggle-electric-state -1)。
+然后我们加入这个函数到 c-mode-common-hook 。</p>
+</div>
+<div class="paragraph">
+<p>参数 -1 告诉  c-toggle-electric-state 被禁用了，而不是被 electric behavior 所触发
+（我是从 C-h f c-toggle-electric-state 中学到的；有些函数想要 nil，但是这个要的是一个负数 ）。</p>
+</div>
+<div class="paragraph">
+<p>你可以直接给一个钩子加入一个匿名函数：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-elisp" data-lang="elisp">(add-hook 'c-mode-common-hook
+          (lambda () (c-toggle-electric-state -1)))</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>但是之后你就没有办法通过名字在引用这个函数了， 所以你不能使用 remove-hook 来把它从钩子中移除了。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_cc_模式的风格系统">cc 模式的风格系统</h3>
+<div class="paragraph">
+<p>说起代码风格，可不只是缩进的尺寸那么简单。
+左花括号放在哪里？他们也需要被缩进吗？</p>
+</div>
+<div class="paragraph">
+<p>c-basic-offset 的 C-h v documentation 提到了一个 『风格系统』，
+并且指引我们到 c-default-style 。</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>C-h v c-default-style</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-elisp" data-lang="elisp">c-default-style is a variable defined in `cc-vars.el'.
+Its value is ((java-mode . "java")
+ (awk-mode . "awk")
+ (other . "gnu"))</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Elisp 语法对于一个 list 是 (a b c)， 对一个 pair 是 (a . b)。
+Pairs 被称作 “cons cells” 在 lisp 术语中，
+并且你可以使用函数 car 来获取第一个元素，
+函数 cdr （发音 “could-er”） 来获取第二个。</p>
+</div>
+<div class="paragraph">
+<p>所以 c-default-style 的值是一个包含了 3 个 pair 的列表；
+着就像 java 模式中的查询字典，awk-mode 和其他是 键，"java", "awk" 和 "gnu" 是 值
+（这里，每个编辑模式的风格名字被 建 所代表了）。
+这些查找字典被称为 “alists”。</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+C-h S alist
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>在你的初始化文件中你可以设置 c-default-style 这样默认的风格对于其它就不是 "gnu" 了.</p>
+</div>
+<div class="paragraph">
+<p>如果你需要自定义任何不在内建的风格内的东西(包含 c-basic-offset 和 indent-tabs-mode),
+我推荐你定义你自己的风格: 这样如果你在不同的项目中使用不同的分割, 你就能很方便的切换(使用 c-set-style).
+我们先前设置 c-basic-offset 的方式会自动创建一个叫做 "user" 的风格.</p>
+</div>
+<div class="paragraph">
+<p>要获取帮助请查看  “Configuration basics”, “Customizing indentation”, 和 “Sample .emacs file” 在 CC 模式手册中.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_绑定按键">绑定按键</h3>
+<div class="paragraph">
+<p>我常常在不同的源代码之间有的文件需要一个 8 个空格长的 tab，另一个在同目录的文件下
+甚至同一文件的不同行，需要一个 4 个空格长的 tab。
+让我们创建一个函数来在 tab 宽度在 2，4，8 个空格之间循环。</p>
+</div>
+<div class="paragraph">
+<p>（我发现变量 tab-width 通过使用 apropos-variable 来搜索 “tab”.）</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-elisp" data-lang="elisp">(defun my-tab-width ()
+  "Cycle tab-width between values 2, 4, and 8."
+  (interactive)
+  (setq tab-width
+        (cond ((eq tab-width 8) 2)
+              ((eq tab-width 2) 4)
+              (t 8)))
+  (redraw-display))</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>这个条件表达式等于 2 如果 tab-width 等于 8；
+变为 4 如果 tab-width 等于 2；否则就是 8.
+在 Info 手册中查找 cond 和 eq 如果你喜欢。</p>
+</div>
+<div class="paragraph">
+<p>我把搜索我写的函数命名为 “my-something”， 因为 elisp 没有单独的命名空间
+为每个模式或包；通过这种方法我可以确保我的函数不会意外的被某个编辑模式所依赖的
+一个已经存在的函数所覆盖。</p>
+</div>
+<div class="paragraph">
+<p>现在让我们绑定新的函数到一个按键序列，这样我们就能方便的调用它了。
+C-c 跟随一个字母就是用来让用户去定义的，那我们就使用 C-c t：</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-elisp" data-lang="elisp">(global-set-key (kbd "C-c t") 'my-tab-width)</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>其中 global-set-key 中 “global” 的意味很明显了。
+如果喜欢一个只在 cc-mode 有用的按键绑定， 使用 define-key 来添加
+绑定到这个模式的 keymap：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-elisp" data-lang="elisp">(define-key c-mode-base-map (kbd "C-c t") 'my-tab-width)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>我发现 c-mode-base-map 使用 C-h v c-mode- TAB TAB.
+也有一个 c-mode-map 仅仅用于 C 语言，而不是所有被 cc 模式支持的语言。</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_关联文件扩展名和一个编辑模式">关联文件扩展名和一个编辑模式</h3>
+<div class="paragraph">
+<p>假设你想要 .h 文件被打开时使用 c++ 模式而不是 c 模式:</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>C-h v auto-mode-alist</p>
+</div>
+<div class="paragraph">
+<p>C-h f add-to-list</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>这复杂的部分会正确处理正则表达式 - elisp 没有正则对正则表达式的文字的语法,
+所以你不得不把它放在一个字符串中, 然后用反斜杠转义, 这样让正则更加糟糕了. 查看 Emacs 手册中的 "Regexps".</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_homework">Homework</h3>
+<div class="paragraph">
+<p>如果你有 30 分钟时间, 阅读 Steve Yegge 的 Emergency Elisp.</p>
+</div>
+<div class="paragraph">
+<p>如果你有 6 个月的时间来完成计算机程序的结构与解释, 一个 MIT 的有名的课本教授了重要的(也很先进)的编程概念和技术使用一个简单的 Lisp 方言叫做 Scheme.
+如果你喜欢数学方面的东西比如用埃拉托斯特尼筛法来找出素数, 海伦的方法来计算平方根, 或者蒙特卡罗模拟法来估算 pi 值, 那你会爱上这本书的.</p>
+</div>
+<div class="paragraph">
+<p>如果你在阅读本手册之前在网上有一大堆的 .emacs 自定义配置, 试着去彻底的理解它们.</p>
+</div>
+<div class="paragraph">
+<p>将来, 当你需要一个特定的自定义选项, 试着去发现解决方案从手册或者 elisp 的源码在用谷歌搜索之前.</p>
+</div>
+<div class="paragraph">
+<p>不要尝试去修改 Emacs 发行版自带的 elisp 文件.
+第一, 要合并你的改变到一个新的 Emacs 版本并不容易.
+第二, 文件是被编译过的, 所以你需要重新编译它们.
+第三, 就算你这样做了也没什么用因为核心的 elisp 函数都是被内置在 Emacs 的镜像中的,
+所以你不得不重新编译整个程序.
+你应该做的, 是使用变量和钩子来提供自定义配置.</p>
+</div>
+<div class="paragraph">
+<p>不要把注意力放在 Emacs 的手册上当它告诉你去使用 'Easy customization' 这个功能时(在一些帮助缓冲区中它会说“you can customize this variable”).
+它指向一个非常糟糕的半图形化界面来设置 Emacs 的变量. 最好保持你所有的自定义配置在你的 init 文件中.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_修复那个糟糕的配色方案">修复那个糟糕的配色方案</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Emacs 默认的配色方案被亲切地称为 "生气的水果沙拉".</p>
+</div>
+<div class="sect2">
+<h3 id="_默认字体">默认字体</h3>
+<div class="paragraph">
+<p>"Fonts" 在 Emacs 手册中:</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+在 'Options' 菜单中点击 'Set Default Font'. 要在将来的会话中保存, 点击 'Save Options' 在 'Options' 菜单.[2]
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>“DejaVu Sans Mono” 是一个很好地选择 (还有 Bitstream Vera Sans Mono”, 或者 OS X 10.6+ 上的 “Menlo” ).
+要选择一个等宽的字体, 即使你喜欢用等比字体编程. 我们之后会提到 Emacs 对等比字体的处理.</p>
+</div>
+<div class="paragraph">
+<p>菜单 “Save Options” 命令自动用新的设置修改你的初始化文件(也会在 echo 区域告诉你, 现在在 <strong>Messages</strong> 缓冲区中如果你错过了).</p>
+</div>
+<div class="paragraph">
+<p>有一个 OS X 的 bug 会阻止 “Save Options” 保存默认字体.
+OS X 用户就不得不使用我下面会解释的自定义字体机制来制定默认的字体名字.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_语法高亮颜色">语法高亮颜色</h3>
+<div class="paragraph">
+<p>Font Lock 模式是一个辅模式负责语法高亮.
+你可以阅读 font-lock 模式如果你想要了解 Emacs 是如何判断注释, 关键字和变量的, 或者如果加入你自己的关键字.</p>
+</div>
+<div class="paragraph">
+<p>但是仅仅去修改颜色:</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+指出你想要修改的字体的名字: describe-face (默认是当前字体) 或者 list-faces-display.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+修改字体会提示你使用一个字体和每个要改变的属性. 保留属性为 "未指定" (默认情况) 来从默认字体继承. 至于前景色和背景色, 你可以使用预定义的颜色通过 tab 自动补全, 或者指定 RGB 值比如 #3f7f5f.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+自定义字体带来了"很容易自定的"借口我前面章节中警告过你不要去用. 点击 State 按钮然后选择为将来的会话保存.(你也可以在这个修改, 但是我更倾向 modify-face 因为它给你 tab 补全为每一个可能的值).
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>除了 descirbe-face, 我在帮助菜单中找到的, 我再 Emacs 手册的 “Faces”, “Standard Faces” and “Customizing Faces” 找到了其余的.</p>
+</div>
+<div class="paragraph">
+<p>现在让我们弄明白如何疏通 “easy customization” interface:</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>访问你的初始化文件查看 “easy customization” 加入了些什么.
+如果你已经打开了文件, 你需要 revert-buffer 来看看最新的修改.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-elisp" data-lang="elisp">init.el
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(default ((t (:height 120 :family "Menlo"))))
+ '(font-lock-comment-face ((t (:foreground "#3f7f5f")))))</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>你可以通过给 custom-set-faces 表单添加参数来配置维护 font-lock 字体,
+但是它们可能被覆盖如果你在将来使用了 easy customization framework.
+受到 custom-set-faces 这个名字的启发, 我搜索了以 set-face 开头的函数并且发现了 found set-face-attribute:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-elisp" data-lang="elisp">(set-face-attribute 'default nil :family "Menlo" :height 120)
+(set-face-attribute 'font-lock-comment-face nil :foreground "#3f7f5f")
+(set-face-attribute 'font-lock-string-face nil :foreground "#4f004f")
+(set-face-attribute 'font-lock-constant-face nil :foreground "#4f004f")
+(set-face-attribute 'font-lock-keyword-face nil :foreground "#00003f")
+(set-face-attribute 'font-lock-builtin-face nil :foreground "#00003f")
+(set-face-attribute 'font-lock-type-face nil :foreground "#000000")
+(set-face-attribute 'font-lock-function-name-face nil
+                    :foreground "#000000" :weight 'bold)
+(set-face-attribute 'font-lock-variable-name-face nil
+                    :foreground "#000000" :weight 'bold)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>上面的配置产生了一个非常保守的 dark-on-white 配色方案.
+我喜欢它因为在很多语言中它高亮了被定义的变量和函数而不是它们使用的.</p>
+</div>
+<div class="paragraph">
+<p>查看 Emacs Lisp 手册中的 “Face Attributes” 可以找到所有的字体属性名字.
+对于 elisp 语法, 关键字符号比如 :foreground 和 :weight 是常量.
+(要对它们求值所以你不必用引号包含它们).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_diff_mode">diff-mode</h3>
+<div class="paragraph">
+<p>说起颜色, 让我们加入一些有用的配色在 diff-mode 中 (我们之前提到的, 在章节 vc version control interface).[4]</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-elisp" data-lang="elisp">init.el
+(eval-after-load 'diff-mode
+  '(progn
+     (set-face-foreground 'diff-added "green4")
+     (set-face-foreground 'diff-removed "red3")))</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>eval-after-load 顾名思义: diff-mode 第一次被加载, 对后面的形式求值.
+Emacs 不会在启动时加载每一个 elisp 包, 而是等到你真正使用 diff-mode 才去加载它.</p>
+</div>
+<div class="paragraph">
+<p>如果你直接在 init 文件里使用 (set-face-foreground 'diff-added &#8230;&#8203;) 地话.
+你会得到一个错误 “invalid face diff-added”.</p>
+</div>
+<div class="paragraph">
+<p>其实你可以在初始化文件里加载 diff-mode (使用 require), 但是这会增加 Emacs 的启动时间,
+所以当你需要在终端启动 Emacs 来作一个快速工作时会有轻微的延迟即使你不使用 diff-mode.</p>
+</div>
+<div class="paragraph">
+<p>eval-after-load takes a single form to evaluate, but we want to make two function calls,
+so we wrap them in progn which merely evaluates a bunch of forms sequentially.
+We quote it so that it doesn’t get evaluated right now, before even being passed to eval-after-load.
+eval-after-load 有一个简单地求值构成, 但是我们想要创建两个函数调用,</p>
+</div>
+<div class="paragraph">
+<p>diff-mode.el.gz</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"></dt>
+<dd>
+<p>provide the package
+(provide 'diff-mode)
+The first argument to eval-after-load has to match the name that the package provides (this usually matches the name of the command to enable the mode, but to double-check: C-h f diff-mode, follow the link to diff-mode.el.gz, and find the provide form near the bottom).</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_色彩主题">色彩主题</h3>
+<div class="paragraph">
+<p>Note: This section and the next, which deal with the color-theme package, were written for Emacs 23. color-theme is obsolete in Emacs 24, so I need to find a better example for installing third-party packages.</p>
+</div>
+<div class="paragraph">
+<p>Maybe you already have a favourite color theme, like Zenburn or Solarized. There are Emacs implementations (Zenburn, Solarized) built on top of the color-theme minor mode. color-theme is a third-party package; it doesn’t come with Emacs.</p>
+</div>
+<div class="paragraph">
+<p>Note that Emacs 24 provides a built-in mechanism for defining multiple color themes. Nevertheless, I’ll walk you through the process of installing third-party packages using color-theme and the Solarized theme as examples.</p>
+</div>
+<div class="paragraph">
+<p>Emacs 24 also comes with a package management system, so—as long as the package’s author has taken advantage of the new mechanism—the manual installation procedure described below will not be necessary either.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_安装第三方的_elisp_包">安装第三方的 elisp 包</h3>
+<div class="paragraph">
+<p>我假设你已经把你的 ~/.emacs.d 纳入 git 版本控制了.[3]</p>
+</div>
+<div class="paragraph">
+<p>color-theme 的安装说明推荐你使用包管理器(apt-get install emacs-goodies-el 或者 port install color-theme-mode.el 之类的)
+但是我更喜欢在一个地方管理我所有的 Emacs 扩展.
+那个地方就是我的 ~/.emacs.d 目录, 因为我终究会碰到一个我的系统包管理器没有提供的扩展.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Download the color-theme.6.6.0.tar.gz and extract into ~/.emacs.d.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-shell" data-lang="shell">git add color-theme.6.6.0;
+git commit -m "color-theme 6.6.0 from http://www.nongnu.org/color-theme/";</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Add the color-theme directory to your Emacs load-path:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-elisp" data-lang="elisp">init.el
+(add-to-list 'load-path "~/.emacs.d/color-theme-6.6.0")</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>And actually load it:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-elisp" data-lang="elisp">(require 'color-theme)</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Now you can select a theme with color-theme-select.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_从_github_安装包">从 github 安装包</h3>
+<div class="paragraph">
+<p>Solarized 的 Emacs 配色主题在 github 上.
+如果你使用 git 管理你的 ~/.emacs.d 目录, 你可以使用 git submodules 来简单地管理这样的第三方包.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-elisp" data-lang="elisp">cd ~/.emacs.d;
+git submodule add https://github.com/sellout/emacs-color-theme-solarized.git;</code></pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>以后你可以在 ~/.emacs.d/emacs-color-theme-solarized/ 使用 git pull 来获取最新的更变.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Add ~/.emacs.d/emacs-color-theme-solarized/ to your Emacs load-path, and require 'color-theme-solarized, as you did for the color-theme package.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>现在你可以使用 color-theme-solarized-light (或者 -dark) 来激活主题了.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_increasing_the_font_size">Increasing the font size</h3>
+<div class="paragraph">
+<p>C-x C-+, C-x C--, and C-x C-0. See “Temporary Face Changes”.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_variable_pitch_mode">variable-pitch-mode</h3>
+<div class="paragraph">
+<p>你可以在 fixed- 和 variable-width 字体在一个特定的缓冲区中使用 variable-pitch-mode 来切换.
+自定义的 face 是 variable-pitch.</p>
+</div>
+<div class="paragraph">
+<p>想要自动启用 variable-pitch-mode, 把它加入到所有你要生效的主模式的钩子中.
+比如, 在 text-mode-hook 里编辑纯文本.</p>
+</div>
+<div class="paragraph">
+<p>如果你要在任何地方都使用它, 我先假定给一个等比字体设置默认字体是无害的.
+variable-pitch-mode 的巨大优势是, 它很容易就可以在等比和等宽字体之间切换当你在一个注释中使用一些字符画和字符表格时.</p>
+</div>
+<div class="paragraph">
+<p>[1]: I found this—after some dead ends—with Info’s index command, typing “font”, tab-completing, and trying whatever looked promising. I could just have explored the Options menu instead, but—silly me—I had disabled the menus because people on the internet said “real Emacs power users disable the menus.” That might make sense on a text terminal, where you can’t click the menu anyway, but on OS X, where there’s only one menu bar at the top of the screen, it’s just silly. See the next footnote.</p>
+</div>
+<div class="paragraph">
+<p>[2]: If you have disabled the menu, perhaps because you’re using an init file copied from someone else or something like the Emacs starter kit, you can re-enable it just for this session with M-x menu-bar-mode.</p>
+</div>
+<div class="paragraph">
+<p>[3]: cd ~/.emacs.d; git init .; git add init.el; git status; git diff --cached;
+git commit -m "My emacs init file."</p>
+</div>
+<div class="paragraph">
+<p>[4]: This customization—with several others—is borrowed from the Emacs Starter Kit.</p>
+</div>
+<div class="paragraph">
+<p>Next: General customization</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="_常用自定义选项">常用自定义选项</h2>
 <div class="sectionbody">
 <div class="sect2">
@@ -1751,7 +2998,7 @@ M-x find-function ido-find-file.
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-使用 diff -cp ido.el.orig ido.el 生成一个补丁 <sup class="footnote">[<a id="_footnoteref_7" class="footnote" href="#_footnote_7" title="View footnote.">7</a>]</sup>
+使用 diff -cp ido.el.orig ido.el 生成一个补丁 <sup class="footnote">[<a id="_footnoteref_8" class="footnote" href="#_footnote_8" title="View footnote.">8</a>]</sup>
 </td>
 </tr>
 </table>
@@ -1760,7 +3007,7 @@ M-x find-function ido-find-file.
 <div class="sect2">
 <h3 id="_创建一个_21_世纪的补丁">创建一个 21 世纪的补丁</h3>
 <div class="paragraph">
-<p><sup class="footnote">[<a id="_footnoteref_8" class="footnote" href="#_footnote_8" title="View footnote.">8</a>]</sup></p>
+<p><sup class="footnote">[<a id="_footnoteref_9" class="footnote" href="#_footnote_9" title="View footnote.">9</a>]</sup></p>
 </div>
 <div class="paragraph">
 <p>理想情况下你最好直接给最新的(未发布)的 Emacs 源码版本打补丁，而不是当前的 release 版。
@@ -1811,7 +3058,7 @@ git pull --rebase</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p><sup class="footnote">[<a id="_footnoteref_9" class="footnote" href="#_footnote_9" title="View footnote.">9</a>]</sup></p>
+<p><sup class="footnote">[<a id="_footnoteref_10" class="footnote" href="#_footnote_10" title="View footnote.">10</a>]</sup></p>
 </div>
 </div>
 <div class="sect2">
@@ -2158,18 +3405,21 @@ Control 和 Meta 键上，也有 OS X 的键位绑定在 Command 键上。</p>
 <a href="#_footnoteref_6">6</a>. 我没有在 Windows 上测试过, 但是我假设 Cygwin 安装了必要的编译器, 头文件和库.
 </div>
 <div class="footnote" id="_footnote_7">
-<a href="#_footnoteref_7">7</a>. 不要问我为什么 Emacs 的维护者们不喜欢一元化的 diffs (diff -u). 他们指定要 diff -c
+<a href="#_footnoteref_7">7</a>. Try this: lynx --dump <a href="http://www.gnu.org/software/emacs/manual/html_node/emacs/index.html" class="bare">http://www.gnu.org/software/emacs/manual/html_node/emacs/index.html</a> | sed '/^References/,$ d' | wc -w
 </div>
 <div class="footnote" id="_footnote_8">
-<a href="#_footnoteref_8">8</a>. 21 世纪需要半 G 磁盘空间和 30 分支的下载
+<a href="#_footnoteref_8">8</a>. 不要问我为什么 Emacs 的维护者们不喜欢一元化的 diffs (diff -u). 他们指定要 diff -c
 </div>
 <div class="footnote" id="_footnote_9">
-<a href="#_footnoteref_9">9</a>. 这里 --rebase 是用来避免冲突如果你在本地有没有推送到 master 分支的提交。虽然你遵循了说明，你的本地修改可能只在私有分支上，而不是 master 分支。
+<a href="#_footnoteref_9">9</a>. 21 世纪需要半 G 磁盘空间和 30 分支的下载
+</div>
+<div class="footnote" id="_footnote_10">
+<a href="#_footnoteref_10">10</a>. 这里 --rebase 是用来避免冲突如果你在本地有没有推送到 master 分支的提交。虽然你遵循了说明，你的本地修改可能只在私有分支上，而不是 master 分支。
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-11-20 03:21:36 UTC
+Last updated 2015-11-20 11:41:55 UTC
 </div>
 </div>
 </body>
