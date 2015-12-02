@@ -845,7 +845,8 @@ M-! date RET
 <p>这个帮助文档特别的长，但是重要信息都在顶部。无视编码系统那段，和一切关于非交互式的参数（就是关于从 lisp 脚本调用这个函数的，对应我们要使用的交互式调用）。</p>
 </div>
 <div class="paragraph">
-<p>“Prefix arg means replace the region with [the output of the shell command]” 说的是提供命令一个数值参数。你将会在本教程中学习数值参数。在这个例子中参数的值并没有意义，所以 M-2 M-| 或者 C-u M-| 都可以。</p>
+<p>“Prefix arg means replace the region with [the output of the shell command]” 说的是提供命令一个数值参数。
+你将会在本教程中学习数值参数。在这个例子中参数的值并没有意义，所以 M-2 M-| 或者 C-u M-| 都可以。</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -1431,7 +1432,7 @@ Emacs手册的目录都比我们的前一章 "Unix/c workflow" 要长。
 只是需要一些微小的配置修改来支持它们各自的语言。从现在开始我会使用 cc-mode 这个名字。</p>
 </div>
 <div class="sect2">
-<h3 id="_房子编码风格">房子编码风格</h3>
+<h3 id="_指导编码风格">指导编码风格</h3>
 <div class="paragraph">
 <p>你喜欢缩进2个，3个，4个，还是8个空格，或者使用 tab？
 一个 tab 是多大？无论你喜欢什么样的，我想都不是 cc-mode 默认提供的那样，所以我们可以试试去改变它。</p>
@@ -1587,12 +1588,11 @@ Otherwise reindent just the current line."
 <p>在表达式的第一个元素 (这里指 +) 也被求值了. + 实际上是一个变量, 它的值就是给数字做加法的函数.</p>
 </div>
 <div class="paragraph">
-<p>Anyway, back to if. if is a “special” form, which means that the elisp interpreter treats if as a special case. Upon reflection, it is obvious that the normal function evaluation rules are not suitable for if: We wouldn’t want to evaluate ELSE, with its possible side-effects, when COND is “true” (non-nil).
-好了, 回到 if. if 是一个 "特殊" 的表达式, 它的意思是 elisp 的解释器会把 if 当做一种特殊的情况. 考虑一下, 很明显普通的函数求值规则不适合它: 我们不会想要去求值 ELSE,
+<p>好了, 回到 if. if 是一个 "特殊" 的表达式, 它的意思是 elisp 的解释器会把 if 当做一种特殊的情况. 考虑一下, 很明显普通的函数求值规则不适合它: 我们不会想要去求值 ELSE,
 和它的特殊副作用, 当 COND 是 "true" 是( non-nil ).</p>
 </div>
 <div class="paragraph">
-<p>这些都再 Emacs Lisp 的手册里有解释:</p>
+<p>这些都在 Emacs Lisp 的手册里有解释:</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -1605,7 +1605,7 @@ Otherwise reindent just the current line."
 <p>C-h S if</p>
 </div>
 <div class="paragraph">
-<p>In the <strong>info</strong> buffer press i (for index) and enter special forms.</p>
+<p>在 <strong>info</strong> 缓冲区按下 i （代表 index）来进入特定的表达式。</p>
 </div>
 </td>
 </tr>
@@ -1619,20 +1619,21 @@ Otherwise reindent just the current line."
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Go back to the cc-cmds.el.gz buffer.</p>
+<p>回到 cc-cmds.el.gz 缓冲区。</p>
 </div>
 <div class="paragraph">
-<p>Enable the eldoc minor mode (M-x eldoc-mode). Now positioning the point over the if statement will show some brief documentation in the echo area.</p>
+<p>启用 eldoc 辅模式 (M-x eldoc-mode)。
+现在把光标定位到 if 条件将会显示一些简短的文档在回显区域。</p>
 </div>
 <div class="paragraph">
-<p>Enable show-paren-mode too. This should help clarify where the THEN and ELSE clauses begin and end.</p>
+<p>也启用 show-paren-mode。这会帮助看清楚 THEN 和 ELSE 从句的开始和结束。</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Now, back up to the defun:</p>
+<p>现在，回到 defun：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1656,7 +1657,7 @@ Otherwise reindent just the current line."
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-你有三种方法在 defun 上获得帮助: eldoc’s summary in the echo area, the reference provided by C-h f, and the more comprehensive Info manual at C-h S. Take your pick.
+你有三种方法在 defun 上获得帮助: eldoc 在回显区域的总结, C-h f 提供的参考，和 C-h S 提供的更详尽的 Info 手册。随你挑。
 </td>
 </tr>
 </table>
@@ -1673,19 +1674,16 @@ Otherwise reindent just the current line."
 <p>defun 定义了一个函数的名字.</p>
 </li>
 <li>
-<p>ARGLIST 函数的一个参数列表. 在 elisp 中, 一个 list 是由闭合的括号包住的.</p>
+<p>ARGLIST 函数的一个参数列表. 在 elisp 中, 一个 list 是由闭合的括号包住的：(a b c). 这里不是作为求一个函数调用的值，因为 defun 是一个特殊的表达式用来对这个特定的 list 做出一些特殊对待。当定义一个没有参数的函数时，ARGLIST 会是一个空的列表 （）。</p>
 </li>
 <li>
-<p>ARGLIST is a list of arguments for the function. In elisp, a list is enclosed in parens: (a b c). In this case it isn’t evaluated as a function call, because defun is a special form that treats this particular list in a special way. When defuning a function that takes no arguments, ARGLIST would be the empty list ().</p>
+<p>选项 DOCSTRING 被 C-h f 帮助系统使用 (是的，即使对于函数你定义了你自己！).</p>
 </li>
 <li>
-<p>The optional DOCSTRING is used by the C-h f help system (yes, even for functions you define yourself!).</p>
+<p>BODY 是一或多个被求值的列表当你调用函数时。</p>
 </li>
 <li>
-<p>BODY is one or more lists that are evaluated when you call the function.</p>
-</li>
-<li>
-<p>…except for the (interactive &#8230;&#8203;) form.</p>
+<p>。。。除了对于（交互式。。。）表达式。</p>
 </li>
 </ul>
 </div>
@@ -1708,12 +1706,15 @@ C-h S interactive
 </div>
 </div>
 <div class="sect2">
-<h3 id="_configuring_indentation">Configuring indentation</h3>
+<h3 id="_配置随进">配置随进</h3>
 <div class="paragraph">
-<p>So. c-indent-line-or-region is a function that optionally takes arguments arg and region, which, when the function is called interactively (for example by pressing TAB), are set to the prefix argument (if specified with C-u or similar) and “true” if the region is active.</p>
+<p>So. c-indent-line-or-region is a function that optionally takes arguments arg and region,
+which, when the function is called interactively (for example by pressing TAB),
+are set to the prefix argument (if specified with C-u or similar) and “true” if the region is active.</p>
 </div>
 <div class="paragraph">
-<p>Right now we care about indentation when operating not on the region but on a single line (i.e. region is nil), so let’s look at the ELSE clause:</p>
+<p>Right now we care about indentation when operating not on the region but on a single line
+(i.e. region is nil), so let’s look at the ELSE clause:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2487,21 +2488,6 @@ Emacs 不会在启动时加载每一个 elisp 包, 而是等到你真正使用 d
 </div>
 <div class="paragraph">
 <p>eval-after-load 的第一个参数必须匹配包提供的名字(通常匹配的名字是启动模式的命令, 但是要仔细检查: C-h f diff-mode, 在 diff-mode.el.gz 的链接之后, 然后发现提供者在接近底部的地方).</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_色彩主题">色彩主题</h3>
-<div class="paragraph">
-<p>Note: This section and the next, which deal with the color-theme package, were written for Emacs 23. color-theme is obsolete in Emacs 24, so I need to find a better example for installing third-party packages.</p>
-</div>
-<div class="paragraph">
-<p>Maybe you already have a favourite color theme, like Zenburn or Solarized. There are Emacs implementations (Zenburn, Solarized) built on top of the color-theme minor mode. color-theme is a third-party package; it doesn’t come with Emacs.</p>
-</div>
-<div class="paragraph">
-<p>Note that Emacs 24 provides a built-in mechanism for defining multiple color themes. Nevertheless, I’ll walk you through the process of installing third-party packages using color-theme and the Solarized theme as examples.</p>
-</div>
-<div class="paragraph">
-<p>Emacs 24 also comes with a package management system, so—as long as the package’s author has taken advantage of the new mechanism—the manual installation procedure described below will not be necessary either.</p>
 </div>
 </div>
 <div class="sect2">
@@ -3387,7 +3373,7 @@ Control 和 Meta 键上，也有 OS X 的键位绑定在 Command 键上。</p>
 <a href="#_footnoteref_6">6</a>. 我没有在 Windows 上测试过, 但是我假设 Cygwin 安装了必要的编译器, 头文件和库.
 </div>
 <div class="footnote" id="_footnote_7">
-<a href="#_footnoteref_7">7</a>. Try this: lynx --dump <a href="http://www.gnu.org/software/emacs/manual/html_node/emacs/index.html" class="bare">http://www.gnu.org/software/emacs/manual/html_node/emacs/index.html</a> | sed '/^References/,$ d' | wc -w
+<a href="#_footnoteref_7">7</a>. 不信试试: lynx --dump <a href="http://www.gnu.org/software/emacs/manual/html_node/emacs/index.html" class="bare">http://www.gnu.org/software/emacs/manual/html_node/emacs/index.html</a> | sed '/^References/,$ d' | wc -w
 </div>
 <div class="footnote" id="_footnote_8">
 <a href="#_footnoteref_8">8</a>. found this—after some dead ends—with Info’s index command, typing “font”, tab-completing, and trying whatever looked promising. I could just have explored the Options menu instead, but—silly me—I had disabled the menus because people on the internet said “real Emacs power users disable the menus.” That might make sense on a text terminal, where you can’t click the menu anyway, but on OS X, where there’s only one menu bar at the top of the screen, it’s just silly. See the next footnote.
@@ -3413,7 +3399,7 @@ Control 和 Meta 键上，也有 OS X 的键位绑定在 Command 键上。</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-11-23 06:53:49 UTC
+Last updated 2015-12-02 15:52:52 UTC
 </div>
 </div>
 </body>
