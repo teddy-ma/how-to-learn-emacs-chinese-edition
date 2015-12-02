@@ -2292,8 +2292,7 @@ C-c 跟随一个字母就是用来让用户去定义的，那我们就使用 C-c
 <div class="sect2">
 <h3 id="_默认字体">默认字体</h3>
 <div class="paragraph">
-<p>"Fonts" 在 Emacs 手册 <sup class="footnote">[<a id="_footnoteref_8" class="footnote" href="#_footnote_8" title="View footnote.">8</a>]</sup>
-中:</p>
+<p>"Fonts" 在 Emacs 手册中:</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -2302,7 +2301,7 @@ C-c 跟随一个字母就是用来让用户去定义的，那我们就使用 C-c
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-在 'Options' 菜单中点击 'Set Default Font'. 要在将来的会话中保存, 点击 'Save Options' 在 'Options' 菜单. <sup class="footnote">[<a id="_footnoteref_9" class="footnote" href="#_footnote_9" title="View footnote.">9</a>]</sup>
+在 'Options' 菜单中点击 'Set Default Font'. 要在将来的会话中保存, 点击 'Save Options' 在 'Options' 菜单. <sup class="footnote">[<a id="_footnoteref_8" class="footnote" href="#_footnote_8" title="View footnote.">8</a>]</sup>
 </td>
 </tr>
 </table>
@@ -2436,7 +2435,7 @@ OS X 用户就不得不使用我下面会解释的自定义字体机制来制定
 <div class="sect2">
 <h3 id="_diff_mode">diff-mode</h3>
 <div class="paragraph">
-<p>说起颜色, 让我们加入一些有用的配色在 diff-mode 中 (我们之前提到的, 在章节 vc version control interface). <sup class="footnote">[<a id="_footnoteref_10" class="footnote" href="#_footnote_10" title="View footnote.">10</a>]</sup></p>
+<p>说起颜色, 让我们加入一些有用的配色在 diff-mode 中 (我们之前提到的, 在章节 vc version control interface). <sup class="footnote">[<a id="_footnoteref_9" class="footnote" href="#_footnote_9" title="View footnote.">9</a>]</sup></p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -2471,8 +2470,10 @@ Emacs 不会在启动时加载每一个 elisp 包, 而是等到你真正使用 d
 所以当你需要在终端启动 Emacs 来作一个快速工作时会有轻微的延迟即使你不使用 diff-mode.</p>
 </div>
 <div class="paragraph">
-<p>eval-after-load 有一个简单地求值构成, 但是我们想要创建两个函数调用, 所以我们把它们包裹在 progn 这样就能连续的进行求值了.
-我们用引号引起来这样它们就不会立刻被求值了, 即使在被传到 eval-after-load 之前.</p>
+<p>eval-after-load takes a single form to evaluate, but we want to make two function calls,
+so we wrap them in progn which merely evaluates a bunch of forms sequentially.
+We quote it so that it doesn’t get evaluated right now, before even being passed to eval-after-load.
+eval-after-load 有一个简单地求值构成, 但是我们想要创建两个函数调用,</p>
 </div>
 <div class="paragraph">
 <p>diff-mode.el.gz</p>
@@ -2482,18 +2483,16 @@ Emacs 不会在启动时加载每一个 elisp 包, 而是等到你真正使用 d
 <dt class="hdlist1"></dt>
 <dd>
 <p>provide the package
-(provide 'diff-mode)</p>
+(provide 'diff-mode)
+The first argument to eval-after-load has to match the name that the package provides (this usually matches the name of the command to enable the mode, but to double-check: C-h f diff-mode, follow the link to diff-mode.el.gz, and find the provide form near the bottom).</p>
 </dd>
 </dl>
-</div>
-<div class="paragraph">
-<p>eval-after-load 的第一个参数必须匹配包提供的名字(通常匹配的名字是启动模式的命令, 但是要仔细检查: C-h f diff-mode, 在 diff-mode.el.gz 的链接之后, 然后发现提供者在接近底部的地方).</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_安装第三方的_elisp_包">安装第三方的 elisp 包</h3>
 <div class="paragraph">
-<p>我假设你已经把你的 ~/.emacs.d 纳入 git 版本控制了. <sup class="footnote">[<a id="_footnoteref_11" class="footnote" href="#_footnote_11" title="View footnote.">11</a>]</sup></p>
+<p>我假设你已经把你的 ~/.emacs.d 纳入 git 版本控制了. <sup class="footnote">[<a id="_footnoteref_10" class="footnote" href="#_footnote_10" title="View footnote.">10</a>]</sup></p>
 </div>
 <div class="paragraph">
 <p>color-theme 的安装说明推荐你使用包管理器(apt-get install emacs-goodies-el 或者 port install color-theme-mode.el 之类的)
@@ -2508,7 +2507,7 @@ Emacs 不会在启动时加载每一个 elisp 包, 而是等到你真正使用 d
 </td>
 <td class="content">
 <div class="paragraph">
-<p>下载 color-theme.6.6.0.tar.gz 并解压到 ~/.emacs.d.</p>
+<p>Download the color-theme.6.6.0.tar.gz and extract into ~/.emacs.d.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2528,7 +2527,7 @@ git commit -m "color-theme 6.6.0 from http://www.nongnu.org/color-theme/";</code
 </td>
 <td class="content">
 <div class="paragraph">
-<p>把色彩主题目录加入你的 Emacs 加载路径:</p>
+<p>Add the color-theme directory to your Emacs load-path:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2548,7 +2547,7 @@ git commit -m "color-theme 6.6.0 from http://www.nongnu.org/color-theme/";</code
 </td>
 <td class="content">
 <div class="paragraph">
-<p>真正地去加载它:</p>
+<p>And actually load it:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2560,7 +2559,7 @@ git commit -m "color-theme 6.6.0 from http://www.nongnu.org/color-theme/";</code
 </table>
 </div>
 <div class="paragraph">
-<p>现在你可以使用 color-theme-select 去选择一个主题.</p>
+<p>Now you can select a theme with color-theme-select.</p>
 </div>
 </div>
 <div class="sect2">
@@ -2596,7 +2595,7 @@ git submodule add https://github.com/sellout/emacs-color-theme-solarized.git;</c
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-添加 ~/.emacs.d/emacs-color-theme-solarized/ 到你的 Emacs 加载路径, 并且 require 'color-theme-solarized, 就和你对 color-theme 包做的一样.
+Add ~/.emacs.d/emacs-color-theme-solarized/ to your Emacs load-path, and require 'color-theme-solarized, as you did for the color-theme package.
 </td>
 </tr>
 </table>
@@ -2606,9 +2605,9 @@ git submodule add https://github.com/sellout/emacs-color-theme-solarized.git;</c
 </div>
 </div>
 <div class="sect2">
-<h3 id="_调整字体大小">调整字体大小</h3>
+<h3 id="_increasing_the_font_size">Increasing the font size</h3>
 <div class="paragraph">
-<p>C-x C-+, C-x C--, and C-x C-0. 查看 “Temporary Face Changes”.</p>
+<p>C-x C-+, C-x C--, and C-x C-0. See “Temporary Face Changes”.</p>
 </div>
 </div>
 <div class="sect2">
@@ -2624,6 +2623,9 @@ git submodule add https://github.com/sellout/emacs-color-theme-solarized.git;</c
 <div class="paragraph">
 <p>如果你要在任何地方都使用它, 我先假定给一个等比字体设置默认字体是无害的.
 variable-pitch-mode 的巨大优势是, 它很容易就可以在等比和等宽字体之间切换当你在一个注释中使用一些字符画和字符表格时.</p>
+</div>
+<div class="paragraph">
+<p>[1]: I found this—after some dead ends—with Info’s index command, typing “font”, tab-completing, and trying whatever looked promising. I could just have explored the Options menu instead, but—silly me—I had disabled the menus because people on the internet said “real Emacs power users disable the menus.” That might make sense on a text terminal, where you can’t click the menu anyway, but on OS X, where there’s only one menu bar at the top of the screen, it’s just silly. See the next footnote.</p>
 </div>
 <div class="paragraph">
 <p>Next: General customization</p>
@@ -2971,7 +2973,7 @@ M-x find-function ido-find-file.
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-使用 diff -cp ido.el.orig ido.el 生成一个补丁 <sup class="footnote">[<a id="_footnoteref_12" class="footnote" href="#_footnote_12" title="View footnote.">12</a>]</sup>
+使用 diff -cp ido.el.orig ido.el 生成一个补丁 <sup class="footnote">[<a id="_footnoteref_11" class="footnote" href="#_footnote_11" title="View footnote.">11</a>]</sup>
 </td>
 </tr>
 </table>
@@ -2980,7 +2982,7 @@ M-x find-function ido-find-file.
 <div class="sect2">
 <h3 id="_创建一个_21_世纪的补丁">创建一个 21 世纪的补丁</h3>
 <div class="paragraph">
-<p><sup class="footnote">[<a id="_footnoteref_13" class="footnote" href="#_footnote_13" title="View footnote.">13</a>]</sup></p>
+<p><sup class="footnote">[<a id="_footnoteref_12" class="footnote" href="#_footnote_12" title="View footnote.">12</a>]</sup></p>
 </div>
 <div class="paragraph">
 <p>理想情况下你最好直接给最新的(未发布)的 Emacs 源码版本打补丁，而不是当前的 release 版。
@@ -3031,7 +3033,7 @@ git pull --rebase</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p><sup class="footnote">[<a id="_footnoteref_14" class="footnote" href="#_footnote_14" title="View footnote.">14</a>]</sup></p>
+<p><sup class="footnote">[<a id="_footnoteref_13" class="footnote" href="#_footnote_13" title="View footnote.">13</a>]</sup></p>
 </div>
 </div>
 <div class="sect2">
@@ -3345,9 +3347,6 @@ Control 和 Meta 键上，也有 OS X 的键位绑定在 Command 键上。</p>
 <div class="paragraph">
 <p>辅助模式可以同时启用多个; 他们的功能从语法高亮到自动拼写检查到修改通用的 Emacs 命令。【Emacs 手册】</p>
 </div>
-<div class="paragraph">
-<p>/<strong>include::download/pdf.asc[]</strong>/</p>
-</div>
 </div>
 </div>
 </div>
@@ -3376,30 +3375,27 @@ Control 和 Meta 键上，也有 OS X 的键位绑定在 Command 键上。</p>
 <a href="#_footnoteref_7">7</a>. 不信试试: lynx --dump <a href="http://www.gnu.org/software/emacs/manual/html_node/emacs/index.html" class="bare">http://www.gnu.org/software/emacs/manual/html_node/emacs/index.html</a> | sed '/^References/,$ d' | wc -w
 </div>
 <div class="footnote" id="_footnote_8">
-<a href="#_footnoteref_8">8</a>. found this—after some dead ends—with Info’s index command, typing “font”, tab-completing, and trying whatever looked promising. I could just have explored the Options menu instead, but—silly me—I had disabled the menus because people on the internet said “real Emacs power users disable the menus.” That might make sense on a text terminal, where you can’t click the menu anyway, but on OS X, where there’s only one menu bar at the top of the screen, it’s just silly. See the next footnote.
+<a href="#_footnoteref_8">8</a>. If you have disabled the menu, perhaps because you’re using an init file copied from someone else or something like the Emacs starter kit, you can re-enable it just for this session with M-x menu-bar-mode.
 </div>
 <div class="footnote" id="_footnote_9">
-<a href="#_footnoteref_9">9</a>. If you have disabled the menu, perhaps because you’re using an init file copied from someone else or something like the Emacs starter kit, you can re-enable it just for this session with M-x menu-bar-mode.
+<a href="#_footnoteref_9">9</a>. This customization—with several others—is borrowed from the Emacs Starter Kit.
 </div>
 <div class="footnote" id="_footnote_10">
-<a href="#_footnoteref_10">10</a>. This customization—with several others—is borrowed from the Emacs Starter Kit.
+<a href="#_footnoteref_10">10</a>. cd ~/.emacs.d; git init .; git add init.el; git status; git diff --cached;git commit -m "My emacs init file."
 </div>
 <div class="footnote" id="_footnote_11">
-<a href="#_footnoteref_11">11</a>. cd ~/.emacs.d; git init .; git add init.el; git status; git diff --cached;git commit -m "My emacs init file."
+<a href="#_footnoteref_11">11</a>. 不要问我为什么 Emacs 的维护者们不喜欢一元化的 diffs (diff -u). 他们指定要 diff -c
 </div>
 <div class="footnote" id="_footnote_12">
-<a href="#_footnoteref_12">12</a>. 不要问我为什么 Emacs 的维护者们不喜欢一元化的 diffs (diff -u). 他们指定要 diff -c
+<a href="#_footnoteref_12">12</a>. 21 世纪需要半 G 磁盘空间和 30 分支的下载
 </div>
 <div class="footnote" id="_footnote_13">
-<a href="#_footnoteref_13">13</a>. 21 世纪需要半 G 磁盘空间和 30 分支的下载
-</div>
-<div class="footnote" id="_footnote_14">
-<a href="#_footnoteref_14">14</a>. 这里 --rebase 是用来避免冲突如果你在本地有没有推送到 master 分支的提交。虽然你遵循了说明，你的本地修改可能只在私有分支上，而不是 master 分支。
+<a href="#_footnoteref_13">13</a>. 这里 --rebase 是用来避免冲突如果你在本地有没有推送到 master 分支的提交。虽然你遵循了说明，你的本地修改可能只在私有分支上，而不是 master 分支。
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-12-02 15:52:52 UTC
+Last updated 2015-12-02 15:57:15 UTC
 </div>
 </div>
 </body>
