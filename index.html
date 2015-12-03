@@ -1556,12 +1556,12 @@ Otherwise reindent just the current line."
 <p>COND, THEN 和 ELSE 的定义是非常清楚的. 但是 “if is a special form” 是什么意思?</p>
 </div>
 <div class="paragraph">
-<p>这会证明它是否是一个常规的函数. elisp 对于"普通"形式的赋值-"形式"意味着给一个"形状"加上括号, 就像
-(a b c) 或者 (a b (cd)) - 就是给每个参数赋值.</p>
+<p>这会证明它是否是一个常规的函数. elisp 对于"普通"表达式的赋值-"表达式"意味着给一个"模型"加上括号,
+就像 (a b c) 或者 (a b (cd)) - 就是给每个参数赋值.</p>
 </div>
 <div class="paragraph">
-<p>让我们假设函数 + (elisp 没有特殊操作符, 所以 + 只是一个函数而已). 如果 x 是一个变量包含值 5, 而 y 是一个变量包含值 2,
-那么下面的两个表达式是等同的.</p>
+<p>让我们假设函数 + (elisp 没有特殊操作符, 所以 + 只是一个函数而已). 如果 x 是一个变量包含值 5,
+而 y 是一个变量包含值 2, 那么下面的两个表达式是等同的.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1588,8 +1588,8 @@ Otherwise reindent just the current line."
 <p>在表达式的第一个元素 (这里指 +) 也被求值了. + 实际上是一个变量, 它的值就是给数字做加法的函数.</p>
 </div>
 <div class="paragraph">
-<p>好了, 回到 if. if 是一个 "特殊" 的表达式, 它的意思是 elisp 的解释器会把 if 当做一种特殊的情况. 考虑一下, 很明显普通的函数求值规则不适合它: 我们不会想要去求值 ELSE,
-和它的特殊副作用, 当 COND 是 "true" 是( non-nil ).</p>
+<p>好了, 回到 if. if 是一个 "特殊" 的表达式, 它的意思是 elisp 的解释器会把 if 当做一种特殊的情况.
+考虑一下, 很明显普通的函数求值规则不适合它: 我们不会想要去求值 ELSE, 和它的特殊副作用, 当 COND 是 "true" 是( non-nil ).</p>
 </div>
 <div class="paragraph">
 <p>这些都在 Emacs Lisp 的手册里有解释:</p>
@@ -1784,7 +1784,7 @@ C-h S buffer-local
 “Buffer-local” 正好在索引中, 所以符号搜索 (C-h S) 可以找到它;
 “File local” 有一个空格, 但是符号搜索不允许有空格,
 搜索你不得不在 Info 缓冲区中搜索.
-你也可以从 “Buffer-Local Variables” Info 节点网上扫描到 “Variables” table of contents.</p>
+你也可以从 “Buffer-Local Variables” Info 节点网上扫描到 “Variables” 目录.</p>
 </div>
 <div class="paragraph">
 <p>让我看看当前的 c-basic-offset 的值:</p>
@@ -1902,7 +1902,7 @@ C-h S buffer-local
 </table>
 </div>
 <div class="paragraph">
-<p>Read more about quoting:</p>
+<p>阅读更多关于 quoting:</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -3393,7 +3393,7 @@ Control 和 Meta 键上，也有 OS X 的键位绑定在 Command 键上。</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-12-03 07:31:19 UTC
+Last updated 2015-12-03 13:26:48 UTC
 </div>
 </div>
 </body>
