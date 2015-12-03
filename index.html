@@ -1706,15 +1706,13 @@ C-h S interactive
 </div>
 </div>
 <div class="sect2">
-<h3 id="_配置随进">配置随进</h3>
+<h3 id="_配置缩进">配置缩进</h3>
 <div class="paragraph">
-<p>So. c-indent-line-or-region is a function that optionally takes arguments arg and region,
-which, when the function is called interactively (for example by pressing TAB),
-are set to the prefix argument (if specified with C-u or similar) and “true” if the region is active.</p>
+<p>嗯. c-indent-line-or-region 是一个函数接收参数 arg 和 region,
+当函数被交互式地调用时(比如通过按下 TAB 键), 被设置为前置参数(如果被 C-u 或类似的行为所指定) 并且 "true" 如果 region 是激活的.</p>
 </div>
 <div class="paragraph">
-<p>Right now we care about indentation when operating not on the region but on a single line
-(i.e. region is nil), so let’s look at the ELSE clause:</p>
+<p>现在我们关系缩进当操作不是在一个 region 而是单独一行 (比如. region 是 nil), 那么让我们看看 ELSE 从句:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1730,7 +1728,7 @@ are set to the prefix argument (if specified with C-u or similar) and “true”
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Use find-function to jump to the definition of c-indent-command.
+使用 find-function 来跳转到 c-indent-command 的定义.
 </td>
 </tr>
 </table>
@@ -1776,7 +1774,7 @@ C-h S buffer-local
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-From the elisp Info node for Buffer-Local Variables, search for “file local” (you can use C-s or the index i).
+要从 elisp Info node 中找到 Buffer-Local Variables, 搜索 “file local” (你可以使用 C-s 或者 index i).
 </td>
 </tr>
 </table>
@@ -1799,7 +1797,7 @@ From the elisp Info node for Buffer-Local Variables, search for “file local”
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Switch to buffer rl.c (c-basic-offset is buffer-local, so it matters which buffer we’re in).</p>
+<p>切换到缓冲区 rl.c(c-basic-offset 是本地缓冲区, 所以我们在哪个缓冲区是要紧的).</p>
 </div>
 <div class="paragraph">
 <p>M-x eval-expression RET c-basic-offset RET</p>
@@ -1822,7 +1820,7 @@ From the elisp Info node for Buffer-Local Variables, search for “file local”
 <p>M-x set-variable c-basic-offset 4</p>
 </div>
 <div class="paragraph">
-<p>Find a line to re-indent and press TAB.</p>
+<p>找到一行要重新缩进的然后按下 TAB.</p>
 </div>
 </td>
 </tr>
@@ -1835,7 +1833,7 @@ From the elisp Info node for Buffer-Local Variables, search for “file local”
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Repeat the same investigation with variable indent-tabs-mode.
+对变量 indent-tabs-mode 重复相同的行为.
 </td>
 </tr>
 </table>
@@ -1850,7 +1848,7 @@ Repeat the same investigation with variable indent-tabs-mode.
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Switch to the <strong>scratch</strong> buffer.
+切换到 <strong>scratch</strong> 缓冲区.
 </td>
 </tr>
 </table>
@@ -1865,7 +1863,7 @@ Switch to the <strong>scratch</strong> buffer.
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Type in this form and evaluate it with C-M-x: (set indent-tabs-mode nil)
+在这个表达式中输入 C-M-x 来求值: (set indent-tabs-mode nil)
 </td>
 </tr>
 </table>
@@ -1924,7 +1922,7 @@ Type in this form and evaluate it with C-M-x: (set indent-tabs-mode nil)
 </table>
 </div>
 <div class="paragraph">
-<p>The following forms do exactly the same; the preferred form is setq.</p>
+<p>下面的表达式是一样的; 更好的表达式是 setq.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1983,7 +1981,7 @@ In the Emacs manual (C-h r) table of contents, search for “init file” and re
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Add the following lines:</p>
+<p>把下面的几行加上:</p>
 </div>
 <div class="paragraph">
 <p>(setq-default c-basic-offset 4)
@@ -2003,7 +2001,7 @@ In the Emacs manual (C-h r) table of contents, search for “init file” and re
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-Restart Emacs, visit rl.c, and verify that your settings are in effect.
+重启 Emacs, 访问 rl.c, 并且确保你的设置生效了.
 </td>
 </tr>
 </table>
@@ -2045,7 +2043,7 @@ C-h m （从 rl.c 缓冲区， 或任何其他 cc 模式的缓冲区）来找出
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Add the following to your init file:</p>
+<p>把下面的内容加入你的初始化文件:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2254,7 +2252,7 @@ C-c 跟随一个字母就是用来让用户去定义的，那我们就使用 C-c
 </div>
 </div>
 <div class="sect2">
-<h3 id="_homework">Homework</h3>
+<h3 id="_家庭作业_2">家庭作业</h3>
 <div class="paragraph">
 <p>如果你有 30 分钟时间, 阅读 Steve Yegge 的 Emergency Elisp.</p>
 </div>
@@ -3395,7 +3393,7 @@ Control 和 Meta 键上，也有 OS X 的键位绑定在 Command 键上。</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2015-12-02 15:57:15 UTC
+Last updated 2015-12-03 07:31:19 UTC
 </div>
 </div>
 </body>
