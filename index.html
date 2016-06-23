@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Asciidoctor 1.5.3">
+<meta name="generator" content="Asciidoctor 1.5.4">
 <meta name="author" content="马陆骋">
 <title>如何学习 Emacs</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
@@ -417,7 +417,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 .hide-for-print{display:none!important}
 .show-for-print{display:inherit!important}}
 </style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
 </head>
 <body class="book toc2 toc-left">
 <div id="header">
@@ -2470,10 +2470,8 @@ Emacs 不会在启动时加载每一个 elisp 包, 而是等到你真正使用 d
 所以当你需要在终端启动 Emacs 来作一个快速工作时会有轻微的延迟即使你不使用 diff-mode.</p>
 </div>
 <div class="paragraph">
-<p>eval-after-load takes a single form to evaluate, but we want to make two function calls,
-so we wrap them in progn which merely evaluates a bunch of forms sequentially.
-We quote it so that it doesn’t get evaluated right now, before even being passed to eval-after-load.
-eval-after-load 有一个简单地求值构成, 但是我们想要创建两个函数调用,</p>
+<p>eval-after-load 由一个简单的求值构成, 但是我们想要创建两个函数调用, 所以我们把他们封装到 progn 中, 仅仅对一系列表达式连续求值.
+我们把他们用引号括起来, 这样它们就不会被立刻执行, 直到被传到 eval-after-load 时.</p>
 </div>
 <div class="paragraph">
 <p>diff-mode.el.gz</p>
@@ -2484,7 +2482,7 @@ eval-after-load 有一个简单地求值构成, 但是我们想要创建两个�
 <dd>
 <p>provide the package
 (provide 'diff-mode)
-The first argument to eval-after-load has to match the name that the package provides (this usually matches the name of the command to enable the mode, but to double-check: C-h f diff-mode, follow the link to diff-mode.el.gz, and find the provide form near the bottom).</p>
+eval-after-load 的第一个参数需要匹配包提供的名字(这通常匹配被模式启动的命令的名字), 但是重复检查下: C-h f diff-mode, 跟随 diff-mode.el.gz 的链接, 发现靠近底部提供的表达式.</p>
 </dd>
 </dl>
 </div>
@@ -3392,7 +3390,7 @@ Control 和 Meta 键上，也有 OS X 的键位绑定在 Command 键上。</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-06-02 07:15:22 UTC
+Last updated 2016-06-23 06:20:24 UTC
 </div>
 </div>
 </body>
