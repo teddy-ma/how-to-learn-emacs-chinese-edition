@@ -457,7 +457,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>据说 Emacs 的学习曲线已经不是那么陡峭了。然而万事开头难，比起其他编辑器而言，要学习 Emacs 还是要难一些的。</p>
 </div>
 <div class="paragraph">
-<p>不过这个坎并不难过。本手册从基础出发，但是真正的目的是帮助你达到下一个等级 — 在几个月而不是几年后就可以编程 Emacs 自己的行为。</p>
+<p>不过这个坎并不难过。本手册会从基础出发，但是真正的目的是帮助你达到下一个等级 — 在几个月而不是几年后就可以编程 Emacs 自己的行为。</p>
 </div>
 <div class="paragraph">
 <p>重点是自己学习 Emacs 内置的帮助文档，调试工具和源码。</p>
@@ -474,21 +474,27 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="_为什么是_emacs">为什么是 Emacs</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>我相信未来的软件工程，如果我们要在日益增加的复杂性前存活，关键在于领域特定语言，它能用几百行而不是数万至数十万行的代码来表示一个解决方案，像现在的软件系统。</p>
+<p>我相信未来的软件工程，如果我们要在日益增加的复杂性中存活的话，关键在于领域特定语言，
+它能用几百行而不像现在的软件系统那样需要数万至数十万行的代码来表示一个解决方案。</p>
 </div>
 <div class="paragraph">
-<p>为什么这一定要用 Emacs 来做呢? 恩, 如果你频繁的使用数十种语言, 甚至创建过自己的语言, 你想要一个可编程的，方便扩展的编辑器。 Emacs 的核心是一个 Emacs Lisp 的解释器, 一个成熟的编程语言. 以及极好的集成帮助, 代码带行和一个调试器. 因为解释器内置在 Emacs 内部, 你可以交互式的编写你的工组和定制项; 你做的改变会立刻起作用.(如果你熟悉其他解释型语言你就已经知道并爱上了方便的 REPL). Emcas 的库和 API 接口数量是巨大的, 但是 Emacs Lisp 本身是很简单的.</p>
+<p>为什么这一定要用 Emacs 来做呢? 恩, 如果你频繁的使用数十种语言, 甚至创建过自己的语言, 你想要一个可编程的，方便扩展的编辑器。
+Emacs 的核心是一个 Emacs Lisp 的解释器, 它一个成熟的编程语言。包含极好的集成帮助, 代码导航和一个调试器。
+因为解释器内置在 Emacs 中, 你可以交互式的编写你的工具和进行定制; 你做的改变会立刻起作用。（如果你熟悉其他解释型语言你就已经知道并爱上了方便的 REPL）。
+Emcas 的库和 API 接口数量是巨大的, 但是 Emacs Lisp 本身是很简单的。</p>
 </div>
 <div class="sect2">
 <h3 id="_emacs_vs_em_em">Emacs vs. <em>_</em></h3>
 <div class="paragraph">
-<p>"写一个 Eclipse 或者 Intellij （或者 Visual Studio）的插件是非常困难的，所以几乎没有人这样做。这意味着没有构建和自定义你自己的工具的社区 。。。更有甚者，创建一个插件的高难度导致人们只做有真正重大意义的程序，然而在 Emacs 中，一个『插件』可以是任何大小，从一行代码到一个巨大的系统和框架 <sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup>"</p>
+<p>『写一个 Eclipse 或者 Intellij（或者 Visual Studio）的插件是非常困难的，所以几乎没有人这样做。
+这意味着没有构建和自定义你自己的工具的社区 。。。更有甚者，创建一个插件的高难度导致人们只做有真正重大意义的程序，
+然而在 Emacs 中，一个『插件』可以是任何大小，从一行代码到一个巨大的系统和框架 footnote:[Steve Yegge, XEmacs is dead. Long live XEmacs!. Read all of Steve’s Emacs articles for some equally conflicted (but much funnier) Emacs advocacy。』</p>
 </div>
 <div class="paragraph">
 <p>当然，有很多合情合理的理由 <strong>不去</strong> 学习 Emacs。如果你几乎只做 Java，Windows/.NET 或者 OS X/iOS 编程，那就有足够的理由使用 Eclipse/Intellij，Visual Studio，或者 XCode。你肯定会在使用IDE的特性方面获得更多的经验。</p>
 </div>
 <div class="paragraph">
-<p>或者你仅仅是厌恶你使用的工具的复杂：我的早期导师，我最尊重的的程序员之一，同时使用几十个记事本和终端窗口和一个超长的任务栏在屏幕的左边来区分它们。真实的故事。</p>
+<p>或者你仅仅是厌恶你使用的工具的复杂：我的早期导师，我最尊重的的程序员之一，同时使用几十个记事本和终端窗口和一个超长的任务栏在屏幕的左边来区分它们。这是真实的故事。</p>
 </div>
 </div>
 <div class="sect2">
@@ -497,7 +503,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p><strong>&#8230;&#8203;你的语言:</strong> 即使你不买『数十种领域特定语言』的帐，想想你 10 年以后，你会仍然只用 Java 或者 C++ 写程序吗？</p>
 </div>
 <div class="paragraph">
-<p><strong>&#8230;&#8203;你的编辑器:</strong> GNU Emacs 已经存在30年了，在更早 10 年还有更早的版本。它是开源的 ( <a href="http://www.gnu.org/philosophy/free-sw.html">自由的</a> )软件。
+<p><strong>&#8230;&#8203;你的编辑器:</strong> GNU Emacs 已经存在 30 年了，在更早 10 年还有更早的版本。它是开源的 (<a href="http://www.gnu.org/philosophy/free-sw.html">自由的</a>)软件。
 至今仍有活跃的开发者，有一个巨大的，多才的社区为每一种新的语言写插件，你可以想象 TextMate 或者 Sublime Text 或者其他的编辑器有这么长的生命周期吗？</p>
 </div>
 </div>
@@ -512,7 +518,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect2">
 <h3 id="_linux">Linux</h3>
 <div class="paragraph">
-<p>Emacs 很可能已经安装了；如果没有，使用你的包管理器（yum, apt-get 等等）。</p>
+<p>Emacs 很可能已经被安装了；如果没有，使用你的包管理器（yum, apt-get 等等）来安装它。</p>
 </div>
 <div class="paragraph">
 <p>如果你的发行版只有旧的 Emacs 包，你可以尝试使用一个第三方的仓库（比如下面列出的），或者 <a href="http://www.gnu.org/software/emacs/emacs-faq.html#Compiling-and-installing-Emacs">从源码构建最新的版本</a></p>
@@ -521,13 +527,11 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sect2">
 <h3 id="_os_x">OS X</h3>
 <div class="paragraph">
-<p>如果你使用 <a href="http://www.macports.org/">macports</a>，安装 <code>emacs-app</code>，它给了你一个本地的 OS X 程序。默认情况下 macports 会安装`Emacs.app` 到 <code>/Applications/MacPorts</code>，如果你使用笔记本电脑，我建议你使用 <code>fullscreen</code> 变体（比如： <code>port install emacs-app +fullscreen</code>）来增加命令 <code>ns-toggle-fullscreen</code>。</p>
+<p>如果你使用 <a href="http://www.macports.org/">macports</a>，安装 <code>emacs-app</code>，它给了你一个本地的 OS X 程序。
+默认情况下 macports 会安装`Emacs.app` 到 <code>/Applications/MacPorts</code>，如果你使用笔记本电脑，我建议你使用 <code>fullscreen</code> 变体（比如： <code>port install emacs-app +fullscreen</code>）来增加命令 <code>ns-toggle-fullscreen</code>。</p>
 </div>
 <div class="paragraph">
-<p>如果你使用 <a href="http://mxcl.github.com/homebrew/">homebrew</a></p>
-</div>
-<div class="paragraph">
-<p><code>brew install emacs --with-cocoa</code>。</p>
+<p>如果你使用 <a href="http://mxcl.github.com/homebrew/">homebrew</a>：<code>brew install emacs --with-cocoa</code>。</p>
 </div>
 <div class="paragraph">
 <p>另外，你可以使用一个 <a href="http://emacsformacosx.com/">预编译的emacs</a>，但是考虑下使用 macports 或者 homebrew 这样就可以很容易的使用它们来安装其他 Unixy 工具。</p>
@@ -564,8 +568,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p>通读 Emacs 的教程：启动 Emacs 然后按下 <code>C-h t</code>。</p>
 </div>
 <div class="paragraph">
-<p>如果教程有点沉闷，坚持下去。它只会占用你最多30分钟；而且里面的东西是理解Emacs的关键。
-你将学会的鼠标移动和文本操作键位在 bash shell 中也起作用。（或者任何使用readline库的程序）。
+<p>如果教程有点沉闷，坚持下去。它只会占用你最多30分钟；而里面的东西是理解Emacs的关键。
+你将学会的鼠标移动和文本操作键位在 bash shell 中也起作用。（或者任何使用 readline 库的程序）。
 如果你使用 OS X，在文本域或者任何原生GUI程序中这些都管用。</p>
 </div>
 <div class="paragraph">
@@ -628,18 +632,20 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </table>
 <div class="paragraph">
 <p>不要担心你不能记住在教程中的 <strong>每一个细节</strong> 。到目前为止没有必要记住所有的鼠标移动键位；箭头键就可以做到。
-如果你忘了打开或者储存文件的按键。文件菜单会提醒你。你可以使用鼠标（停留在右手边的窗口的模式
-显示行并且阅读显示的帮助文字）而不是记住 <code>C-x 1</code> 来移除窗口。我会让你在一个月以后去重读整个教程，来发现差异；
-在此期间，尝试学习键位而不是依赖菜单和鼠标。</p>
+如果你忘了打开或者储存文件的按键。文件菜单会提醒你。
+如果你不记得使用 <code>C-x 1</code> 来移除一个 frame 中的其它 windows，你可以使用鼠标（停留在窗口的模式的 model line 的右边会显示帮助文字）。
+我会让你在一个月以后去重读整个教程，来发现差异；在此期间，尝试学习键位而不是依赖菜单和鼠标。</p>
 </div>
 <div class="paragraph">
-<p>如果你在使用一台运行 OS X 的 Mac 电脑，你是幸运的：因为你有独立的 Meta(alt/option)， Control，和 Command(⌘) 按键在你的键盘上，后者是为标准 OS 键位保留的。你可以使用 <code>⌘-s</code> 来保存，<code>⌘-c</code> 来复制，<code>⌘-v</code> 来粘贴，<code>⌘-f</code> 来搜索。不过，你最终应该学习上述命令的 Emacs 替代键位，因为它们更强大。对 Emacs 来说，⌘ 按键叫做 <code>super</code>，缩写是小写的 <code>s</code>，比如`s-f`。</p>
+<p>如果你在使用一台运行 OS X 的 Mac 电脑，你是幸运的：因为你拥有独立的 Meta(alt/option)，Control，和 Command(⌘) 按键在你的键盘上，后者是为标准 OS 键位保留的。
+你可以使用 <code>⌘-s</code> 来保存，<code>⌘-c</code> 来复制，<code>⌘-v</code> 来粘贴，<code>⌘-f</code> 来搜索。
+不过，你最终应该学习上述命令的 Emacs 替代键位，因为它们更强大。对 Emacs 来说，⌘ 按键叫做 <code>super</code>，缩写是小写的 <code>s</code>，比如`s-f`。</p>
 </div>
 <div class="paragraph">
 <p><strong>下面这段原文已删除</strong>
-如果你不使用Mac，你要抵制住使用 cua-mode 的诱惑，cua-mode 重绑定了按键诸如 <code>C-z</code>，<code>C-x</code>，<code>C-c</code> 和 <code>C-v</code> 到
-它们的标准 Windows 定义。<code>cua-mode</code> 也改变了 <code>region</code> 的行为，使用 <code>shift-箭头按键</code> 高亮文本，并且输入
-文本代替激活选择，就像你在其他编辑器中期待的一样。要习惯使用 Emacs 的方式做上面的事情。</p>
+如果你不使用 Mac，你要抵制住使用 cua-mode 的诱惑，cua-mode 重绑定了按键诸如 <code>C-z</code>，<code>C-x</code>，<code>C-c</code> 和 <code>C-v</code> 到它们的标准 Windows 定义。
+<code>cua-mode</code> 也改变了 <code>region</code> 的行为，使用 <code>shift-箭头按键</code> 高亮文本，并且输入文本代替激活选择，就像你在其他编辑器中期待的一样。
+要习惯使用 Emacs 的方式做上面的事情。</p>
 </div>
 </div>
 </div>
@@ -648,7 +654,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="sectionbody">
 <div class="paragraph">
 <p>本章使用了 GUN Radline 库的源码来作为操作的例子。
-你可以通过命令 <code>git clone git://git.savannah.gnu.org/readline.git</code> <sup class="footnote">[<a id="_footnoteref_2" class="footnote" href="#_footnote_2" title="View footnote.">2</a>]</sup> 来获取它，
+你可以通过命令 <code>git clone git://git.savannah.gnu.org/readline.git</code> <sup class="footnote">[<a id="_footnoteref_1" class="footnote" href="#_footnote_1" title="View footnote.">1</a>]</sup> 来获取它，
 或者也可以使用你自己的 C 或者 C++ 代码。</p>
 </div>
 <div class="sect2">
@@ -666,7 +672,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </table>
 </div>
 <div class="paragraph">
-<p>如果你不小心再次调用了 C-x C-f，或者其他等待你输入的命令，记住你可以通过按下 C-g (确保聚焦在 minibuffer) 来取消掉。</p>
+<p>如果你不小心再次调用了 <code>C-x C-f</code>，或者其他等待你输入的命令，记住你可以通过按下 <code>C-g</code> (确保聚焦在 minibuffer) 来取消掉。</p>
 </div>
 <div class="paragraph">
 <p>因为这个是一个 C 语言的源文件，Emacs 已经自动激活了一个编辑模式叫做 <code>c-mode</code>，它提供了一些自定义的按键绑定和 C 语言的缩进规则和语法高亮的知识。
@@ -688,7 +694,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </table>
 </div>
 <div class="paragraph">
-<p>这会创建一个新的缓冲区来运行环境变量指定的 shell。<sup class="footnote">[<a id="_footnoteref_3" class="footnote" href="#_footnote_3" title="View footnote.">3</a>]</sup> 这个缓冲区被称为 <strong>shell</strong> (星号是名字的一部分, 所以你不得不在使用 <code>C-x b</code> 切换时输入它们)。</p>
+<p>这会创建一个新的缓冲区来运行环境变量指定的 shell。<sup class="footnote">[<a id="_footnoteref_2" class="footnote" href="#_footnote_2" title="View footnote.">2</a>]</sup> 这个缓冲区被称为 <strong>shell</strong> (星号是名字的一部分, 所以你不得不在使用 <code>C-x b</code> 切换时输入它们)。</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -698,7 +704,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </td>
 <td class="content">
 <div class="paragraph">
-<p>cd 到 readline 的目录然后运行下面的命令：</p>
+<p><code>cd</code> 到 <code>readline</code> 的目录然后运行下面的命令：</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -712,7 +718,8 @@ make</code></pre>
 </div>
 <div class="paragraph">
 <p>这个 <strong>shell</strong> 缓冲区的编辑模式是 shell-mode。你可以在 shell-mode 中运行任何 shell 命令；例外的情况是执行一些需要真正终端支持的，比如分页 (less) 和基于鼠标的程序。
-你失去了 bash 的 readline 补全和其他任何自定义的 bash-completion 脚本, 或者在这个模型下你的 shell 中的等效选择(虽然 Emacs 提供了它自己的命令历史和 tab 补全)。出于这些原因，我倾向于使用一个真正的终端(在 Emacs 之外)运行一些任务，就像在一个 shell 中运行 Emacs 一样。 (尝试去在 Emacs 中做所有的事情就得不偿失了)。</p>
+你失去了 bash 的 readline 补全和其他任何自定义的 bash-completion 脚本, 或者在这个模型下你的 shell 中的等效选择(虽然 Emacs 提供了它自己的命令历史和 tab 补全)。
+出于这些原因，我倾向于使用一个真正的终端(在 Emacs 之外)运行一些任务，就像在一个 shell 中运行 Emacs 一样。 (尝试去在 Emacs 中做所有的事情就得不偿失了)。</p>
 </div>
 <div class="paragraph">
 <p>shell-mode 的一大优势就是所有的输出都是可以被你搜索，复制，粘贴到的，或者其它行为，都可以用 Emacs 的标准命令来操作；你不需要移动你的手到鼠标那儿仅仅为了选择一些文字。</p>
@@ -727,7 +734,7 @@ make</code></pre>
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-输入 C-h m 然后阅读 shell-mode 的文档和它的按键绑定。
+输入 <code>C-h m</code> 然后阅读 shell-mode 的文档和它的按键绑定。
 </td>
 </tr>
 </table>
@@ -736,7 +743,7 @@ make</code></pre>
 <p>（目前为止, 不要操心去阅读帮助文档中关于自定义的部分 —  shell-mode 提供的变量和钩子去改变它的行为。在 shell-mode 之后的文档还有关于所有的激活状态的副模式的文档；你也不需要阅读它们）。</p>
 </div>
 <div class="paragraph">
-<p>特别有趣的是按下 RET 或者 C-c RET 在前一个输入行中；C-&lt;up&gt; and C-&lt;down&gt; (or M-p and M-n) 来循环上一个命令；M-x 来循环目录。</p>
+<p>特别有趣的地方是在前一个输入行中按下 <code>RET</code> 或者 <code>C-c RET</code> ；<code>C-&lt;up&gt;</code> and <code>C-&lt;down&gt;</code> (or <code>M-p</code> and <code>M-n</code>) 来循环上一个命令；M-x 来循环目录。</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -746,10 +753,10 @@ make</code></pre>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>指出如何发送信号(比如: C-c) 给 shell。(提示：搜索帮助缓冲区的内容，关键字 "interrupt" 和 "stop")</p>
+<p>指出如何发送信号(比如: <code>C-c</code>) 给 shell。(提示：搜索帮助缓冲区的内容，关键字 "interrupt" 和 "stop")</p>
 </div>
 <div class="paragraph">
-<p>指出 C-M-l(字母 l, 不是1) 和 C-c C-s 是做什么的 (这些都是在运行一个 shell 命令产出大量的输出时很有用的) <sup class="footnote">[<a id="_footnoteref_4" class="footnote" href="#_footnote_4" title="View footnote.">4</a>]</sup></p>
+<p>指出 <code>C-M-l</code>(字母 l, 不是1) 和 <code>C-c C-s</code> 是做什么的 (这些都是在运行一个 shell 命令产出大量的输出时很有用的) <sup class="footnote">[<a id="_footnoteref_3" class="footnote" href="#_footnote_3" title="View footnote.">3</a>]</sup></p>
 </div>
 </td>
 </tr>
@@ -759,7 +766,8 @@ make</code></pre>
 <div class="sect2">
 <h3 id="_eshell">eshell</h3>
 <div class="paragraph">
-<p>如果你不是特别的执着于 bash 或者其它任何 shell，除了 shell 以外你可以考虑使用 eshell，一个完全由 Emacs lisp 实现的 shell。先不说其他优势，在 Windows 上运行 eshell 不需要 Cygwin；你可以输入 lisp 代码或者通过名字直接在 shell 提示符上执行任何 Emacs 命令；而且你可以重定向命令输出到 Emacs 剪切板或者任何打开的 Emacs 的缓冲区。</p>
+<p>如果你不是特别的执着于 bash 或者其它任何 shell，除了 <code>shell</code> 模式以外你可以考虑使用 <code>eshell</code> 模式，一个完全由 Emacs lisp 实现的 shell。
+先不说其他优势，在 Windows 上运行 eshell 就不需要 Cygwin 了；你可以输入 lisp 代码或者通过名字直接在 shell 提示符上执行任何 Emacs 命令；而且你可以重定向命令输出到 Emacs 剪切板或者任何打开的 Emacs 的缓冲区。</p>
 </div>
 <div class="paragraph">
 <p>我自己不使用 eshell，但是很多人会用。目前为止它可能是最简单的可以(运行在 Emacs 内部的)长期使用的 shell。</p>
@@ -768,15 +776,16 @@ make</code></pre>
 <div class="sect2">
 <h3 id="_ansi_term">ansi-term</h3>
 <div class="paragraph">
-<p>在 Emacs 中运行一个 shell 的最后一个选择就是 ansi-term 了。这是一个完全的 terminal 模拟器，而且它将会把大多数的按键直接发送给 terminal 中运行的程序。
+<p>在 Emacs 中运行一个 shell 的最后一个选择就是 <code>ansi-term</code> 了。
+这是一个完全的 terminal 模拟器，而且它将会把大多数的按键直接发送给 terminal 中运行的程序。
 包含 TAB，所以会是 shell，而不是 Emacs，来执行 tab 补全。</p>
 </div>
 <div class="paragraph">
-<p>C-x 和 C-c 仍然会被 Emacs 处理；对于 M-x 你就得输入 C-x M-x 来实现了。
+<p><code>C-x</code> 和 <code>C-c</code> 仍然会被 Emacs 处理；对于 <code>M-x</code> 你就得输入 <code>C-x M-x</code> 来实现了。
 你可以从 raw 字符模式转换到 line 模型来获得普通的 Emacs 行为（比如：移动光标周围这样你可以复制一些前面的输出）；直到你输入回车，没有东西会被发送给终端。</p>
 </div>
 <div class="paragraph">
-<p>想要获得帮助，你不能使用 C-h m 因为 C-h 被传给 shell 了（很可能意味着回退）。应该使用 f1，或者通过名字调用 describe-mode 。</p>
+<p>想要获得帮助，你不能使用 <code>C-h m</code> 因为 <code>C-h</code> 被传给 shell 了（很可能意味着回退）。应该使用 f1，或者通过名字调用 describe-mode 。</p>
 </div>
 </div>
 <div class="sect2">
@@ -798,7 +807,7 @@ M-! date RET
 </div>
 <div class="paragraph">
 <p>shell-command-on-region (M-|) 比较类似但是它是发送当前的选择区到 shell 命令的标准输入。
-让我们使用这招来计算 rl.c 的 main 函数的行数吧：</p>
+让我们使用这招来计算 <code>rl.c</code> 的 main 函数的行数吧：</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -808,16 +817,16 @@ M-! date RET
 </td>
 <td class="content">
 <div class="paragraph">
-<p>切换到 rl.c 的缓冲区（使用 C-x b）。</p>
+<p>切换到 <code>rl.c</code> 的缓冲区（使用 <code>C-x b</code>）。</p>
 </div>
 <div class="paragraph">
-<p>移动光标到 main 函数（通过 C-s 来搜索）。现在移动光标让它位于 main 函数的左花括号前。</p>
+<p>移动光标到 <code>main</code> 函数（通过 <code>C-s</code> 来搜索）。现在移动光标让它位于 main 函数的左花括号前。</p>
 </div>
 <div class="paragraph">
-<p>按下 C-SPC 来设置标记。</p>
+<p>按下 <code>C-SPC</code> 来设置标记。</p>
 </div>
 <div class="paragraph">
-<p>按下 C-M-f 来移动光标到对应的右花括号前面。现在选择区覆盖了 main 函数的整个方法体。</p>
+<p>按下 <code>C-M-f</code> 来移动光标到对应的右花括号前面。现在选择区覆盖了 <code>main</code> 函数的整个方法体。</p>
 </div>
 <div class="paragraph">
 <p>M-| wc -l RET</p>
@@ -827,7 +836,7 @@ M-! date RET
 </table>
 </div>
 <div class="paragraph">
-<p>如果你忘记了这些命令的名字，输入 M-x shell TAB TAB。</p>
+<p>如果你忘记了这些命令的名字，输入 <code>M-x shell TAB TAB</code>。</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -836,7 +845,7 @@ M-! date RET
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-阅读 shell-command-on-region 的帮助。你可以通过按键绑定 (C-h k) 或者函数名字 (C-h f) 来查找到。
+阅读 shell-command-on-region 的帮助。你可以通过按键绑定 (<code>C-h k</code>) 或者函数名字 (<code>C-h f</code>) 来查找到。
 </td>
 </tr>
 </table>
@@ -867,7 +876,7 @@ M-! date RET
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-现在撤销 (C-/) 你在缓冲区做的事情。注意显示模式的那行的指示器的变化当缓冲区有未保存的修改时。
+现在撤销 (C-/) 你在缓冲区做的事情。注意当缓冲区有未保存的修改时显示模式的那行的指示器的变化。
 </td>
 </tr>
 </table>
@@ -882,7 +891,7 @@ M-! date RET
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-打开文件 file readline/configure。
+打开文件 <code>readline/configure</code>。
 </td>
 </tr>
 </table>
@@ -892,14 +901,14 @@ M-! date RET
 </div>
 <div class="paragraph">
 <p>编辑 shell 脚本的模式叫做 sh-mode （对应运行交互式 shell 会话的 shell-mode，我们前面看过了）。如果 Emacs 没有辨认出那个文件是一个 shell 脚本
-（也许它没有在第一行显示 shebang）你可以输入。。。你猜对了。。。M-x sh-mode。</p>
+（也许它没有在第一行显示 shebang）你可以输入。。。你猜对了。。。<code>M-x sh-mode</code>。</p>
 </div>
 <div class="paragraph">
 <p>我对 sh-mode 真没啥好说的。它会语法高亮和缩进各类 shell；并且它提供按键绑定来运行脚本，和插入某些 shell 结构（case，loops 等）和纠正当前 shell 的语法。
 如果 Emacs 搞错了它（由于没有 shebang）你可以告诉 Emacs 去用哪个 shell。</p>
 </div>
 <div class="paragraph">
-<p>现在你知道在哪里去发现如何解决问题了。</p>
+<p>现在你知道在哪里去发现解决问题的方案了。</p>
 </div>
 </div>
 <div class="sect2">
@@ -917,7 +926,7 @@ M-! date RET
 </table>
 </div>
 <div class="paragraph">
-<p>假设 bash shell 的 Info 文档被正确的安装在你的系统上（至少在任何 Linux 或者 OS X 系统上是这样的） 你将会看到一个 Info 窗口展示 bash 手册在 test 命令那行。</p>
+<p>假设 bash shell 的 Info 文档被正确的安装在你的系统上（至少在任何 Linux 或者 OS X 系统上是这样的），你将会看到一个 Info 窗口展示 bash 手册在 test 命令那行。</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -1044,7 +1053,7 @@ M-! date RET
 <div class="sect2">
 <h3 id="_rgrep">rgrep</h3>
 <div class="paragraph">
-<p>为了搜索所有的文档中的一个字符串（或者正则表达式）, 使用 rgrep <sup class="footnote">[<a id="_footnoteref_5" class="footnote" href="#_footnote_5" title="View footnote.">5</a>]</sup> 这输出一个 matches 在一个新的缓冲区中，你可以导航就像编辑缓冲区(事实上, grep-mode 从 compilation-mode 继承了它的函数和按键绑定）。</p>
+<p>为了搜索所有的文档中的一个字符串（或者正则表达式）, 使用 rgrep <sup class="footnote">[<a id="_footnoteref_4" class="footnote" href="#_footnote_4" title="View footnote.">4</a>]</sup> 这输出一个 matches 在一个新的缓冲区中，你可以导航就像编辑缓冲区(事实上, grep-mode 从 compilation-mode 继承了它的函数和按键绑定）。</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -1350,7 +1359,7 @@ rl.c 大概已经有了很大的变化了. 调用 vc-revert 来撤销到仓库�
 </table>
 </div>
 <div class="paragraph">
-<p>只要你没有引入任何错误到任何源文件中, 编译应该是成功的. <sup class="footnote">[<a id="_footnoteref_6" class="footnote" href="#_footnote_6" title="View footnote.">6</a>]</sup>
+<p>只要你没有引入任何错误到任何源文件中, 编译应该是成功的. <sup class="footnote">[<a id="_footnoteref_5" class="footnote" href="#_footnote_5" title="View footnote.">5</a>]</sup>
 如果有错误, 你知道该如何回滚.</p>
 </div>
 <div class="admonitionblock tip">
@@ -1419,7 +1428,7 @@ frame 1</p>
 <div class="paragraph">
 <p>我应该带领你了解 Emacs，Emacs Lisp 的关系，和 CC 模式的手册，但是它们是那么的。。。长！
 Emacs手册的目录都比我们的前一章 "Unix/c workflow" 要长。
-<sup class="footnote">[<a id="_footnoteref_7" class="footnote" href="#_footnote_7" title="View footnote.">7</a>]</sup></p>
+<sup class="footnote">[<a id="_footnoteref_6" class="footnote" href="#_footnote_6" title="View footnote.">6</a>]</sup></p>
 </div>
 <div class="paragraph">
 <p>然而我会向你展示我是如何尝试去发现我需要的信息在Emacs的源码中的（谢天谢地，大多数都是lisp而不是C）。
@@ -2301,7 +2310,7 @@ C-c 跟随一个字母就是用来让用户去定义的，那我们就使用 C-c
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-在 'Options' 菜单中点击 'Set Default Font'. 要在将来的会话中保存, 点击 'Save Options' 在 'Options' 菜单. <sup class="footnote">[<a id="_footnoteref_8" class="footnote" href="#_footnote_8" title="View footnote.">8</a>]</sup>
+在 'Options' 菜单中点击 'Set Default Font'. 要在将来的会话中保存, 点击 'Save Options' 在 'Options' 菜单. <sup class="footnote">[<a id="_footnoteref_7" class="footnote" href="#_footnote_7" title="View footnote.">7</a>]</sup>
 </td>
 </tr>
 </table>
@@ -2435,7 +2444,7 @@ OS X 用户就不得不使用我下面会解释的自定义字体机制来制定
 <div class="sect2">
 <h3 id="_diff_mode">diff-mode</h3>
 <div class="paragraph">
-<p>说起颜色, 让我们加入一些有用的配色在 diff-mode 中 (我们之前提到的, 在章节 vc version control interface). <sup class="footnote">[<a id="_footnoteref_9" class="footnote" href="#_footnote_9" title="View footnote.">9</a>]</sup></p>
+<p>说起颜色, 让我们加入一些有用的配色在 diff-mode 中 (我们之前提到的, 在章节 vc version control interface). <sup class="footnote">[<a id="_footnoteref_8" class="footnote" href="#_footnote_8" title="View footnote.">8</a>]</sup></p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -2490,7 +2499,7 @@ eval-after-load 的第一个参数需要匹配包提供的名字(这通常匹配
 <div class="sect2">
 <h3 id="_安装第三方的_elisp_包">安装第三方的 elisp 包</h3>
 <div class="paragraph">
-<p>我假设你已经把你的 ~/.emacs.d 纳入 git 版本控制了. <sup class="footnote">[<a id="_footnoteref_10" class="footnote" href="#_footnote_10" title="View footnote.">10</a>]</sup></p>
+<p>我假设你已经把你的 ~/.emacs.d 纳入 git 版本控制了. <sup class="footnote">[<a id="_footnoteref_9" class="footnote" href="#_footnote_9" title="View footnote.">9</a>]</sup></p>
 </div>
 <div class="paragraph">
 <p>color-theme 的安装说明推荐你使用包管理器(apt-get install emacs-goodies-el 或者 port install color-theme-mode.el 之类的)
@@ -2968,7 +2977,7 @@ M-x find-function ido-find-file.
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-使用 diff -cp ido.el.orig ido.el 生成一个补丁 <sup class="footnote">[<a id="_footnoteref_11" class="footnote" href="#_footnote_11" title="View footnote.">11</a>]</sup>
+使用 diff -cp ido.el.orig ido.el 生成一个补丁 <sup class="footnote">[<a id="_footnoteref_10" class="footnote" href="#_footnote_10" title="View footnote.">10</a>]</sup>
 </td>
 </tr>
 </table>
@@ -2977,7 +2986,7 @@ M-x find-function ido-find-file.
 <div class="sect2">
 <h3 id="_创建一个_21_世纪的补丁">创建一个 21 世纪的补丁</h3>
 <div class="paragraph">
-<p><sup class="footnote">[<a id="_footnoteref_12" class="footnote" href="#_footnote_12" title="View footnote.">12</a>]</sup></p>
+<p><sup class="footnote">[<a id="_footnoteref_11" class="footnote" href="#_footnote_11" title="View footnote.">11</a>]</sup></p>
 </div>
 <div class="paragraph">
 <p>理想情况下你最好直接给最新的(未发布)的 Emacs 源码版本打补丁，而不是当前的 release 版。
@@ -3028,7 +3037,7 @@ git pull --rebase</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p><sup class="footnote">[<a id="_footnoteref_13" class="footnote" href="#_footnote_13" title="View footnote.">13</a>]</sup></p>
+<p><sup class="footnote">[<a id="_footnoteref_12" class="footnote" href="#_footnote_12" title="View footnote.">12</a>]</sup></p>
 </div>
 </div>
 <div class="sect2">
@@ -3354,48 +3363,45 @@ Control 和 Meta 键上，也有 OS X 的键位绑定在 Command 键上。</p>
 <div id="footnotes">
 <hr>
 <div class="footnote" id="_footnote_1">
-<a href="#_footnoteref_1">1</a>. Steve Yegge, XEmacs is dead. Long live XEmacs!. Read all of Steve’s Emacs articles for some equally conflicted (but much funnier) Emacs advocacy.
+<a href="#_footnoteref_1">1</a>. 你需要 git, 一个源码控制系统; Git Book <a href="http://book.git-scm.com/2_installing_git.html">有安装说明</a>.
 </div>
 <div class="footnote" id="_footnote_2">
-<a href="#_footnoteref_2">2</a>. 你需要 git, 一个源码控制系统; Git Book <a href="http://book.git-scm.com/2_installing_git.html">有安装说明</a>.
+<a href="#_footnoteref_2">2</a>. 在 Windows 系统中你需要一个 Cygwin 或类似的东西提供的 shell.
 </div>
 <div class="footnote" id="_footnote_3">
-<a href="#_footnoteref_3">3</a>. 在 Windows 系统中你需要一个 Cygwin 或类似的东西提供的 shell.
+<a href="#_footnoteref_3">3</a>. 这些按键绑定不是拍脑袋想出来的. <code>C-c C-s</code> 是 <code>C-x C-s</code> 的镜像, 你知道这是用来保存整个缓冲区到一个文件的("全局"的按键绑定趋向于使用 <code>C-x</code> 开头, 反之 <code>C-c</code> 是一个模式专用按键绑定的开头. 并且 <code>C-M-l</code> 在其它编辑模式中有同样的表现为函数, 在 c-mode 中它试图把光标周围的函数都带入 view 中. 如果你感到被按键绑定的数量淹没了你的脑容量, 不要担心, 你总是可以使用 <code>C-h m</code> 找到它们)
 </div>
 <div class="footnote" id="_footnote_4">
-<a href="#_footnoteref_4">4</a>. 这些按键绑定不是拍脑袋想出来的. C-c C-s 是 C-x C-s的镜像, 你知道这是用来保存整个缓冲区到一个文件的("全局"的按键绑定趋向于使用 C-x 开头, 反之 C-c 是一个模式专用按键绑定的开头. 并且 C-M-l 在其它编辑模式中有同样的表现函数, 在 c-mode 中它试图把光标周围的函数都带入 view 中. 如果你感到被按键绑定的数量淹没了你的脑容量, 不要担心, 你总是可以使用 C-h m 找到它们)
+<a href="#_footnoteref_4">4</a>. 在 Windows 系统中你需要一个 Cygwin 或类似的东西提供的 find 和 grep 命令.
 </div>
 <div class="footnote" id="_footnote_5">
-<a href="#_footnoteref_5">5</a>. 在 Windows 系统中你需要一个 Cygwin 或类似的东西提供的 find 和 grep 命令.
+<a href="#_footnoteref_5">5</a>. 我没有在 Windows 上测试过, 但是我假设 Cygwin 安装了必要的编译器, 头文件和库.
 </div>
 <div class="footnote" id="_footnote_6">
-<a href="#_footnoteref_6">6</a>. 我没有在 Windows 上测试过, 但是我假设 Cygwin 安装了必要的编译器, 头文件和库.
+<a href="#_footnoteref_6">6</a>. 不信试试: lynx --dump <a href="http://www.gnu.org/software/emacs/manual/html_node/emacs/index.html" class="bare">http://www.gnu.org/software/emacs/manual/html_node/emacs/index.html</a> | sed '/^References/,$ d' | wc -w
 </div>
 <div class="footnote" id="_footnote_7">
-<a href="#_footnoteref_7">7</a>. 不信试试: lynx --dump <a href="http://www.gnu.org/software/emacs/manual/html_node/emacs/index.html" class="bare">http://www.gnu.org/software/emacs/manual/html_node/emacs/index.html</a> | sed '/^References/,$ d' | wc -w
+<a href="#_footnoteref_7">7</a>. If you have disabled the menu, perhaps because you’re using an init file copied from someone else or something like the Emacs starter kit, you can re-enable it just for this session with M-x menu-bar-mode.
 </div>
 <div class="footnote" id="_footnote_8">
-<a href="#_footnoteref_8">8</a>. If you have disabled the menu, perhaps because you’re using an init file copied from someone else or something like the Emacs starter kit, you can re-enable it just for this session with M-x menu-bar-mode.
+<a href="#_footnoteref_8">8</a>. This customization—with several others—is borrowed from the Emacs Starter Kit.
 </div>
 <div class="footnote" id="_footnote_9">
-<a href="#_footnoteref_9">9</a>. This customization—with several others—is borrowed from the Emacs Starter Kit.
+<a href="#_footnoteref_9">9</a>. cd ~/.emacs.d; git init .; git add init.el; git status; git diff --cached;git commit -m "My emacs init file."
 </div>
 <div class="footnote" id="_footnote_10">
-<a href="#_footnoteref_10">10</a>. cd ~/.emacs.d; git init .; git add init.el; git status; git diff --cached;git commit -m "My emacs init file."
+<a href="#_footnoteref_10">10</a>. 不要问我为什么 Emacs 的维护者们不喜欢一元化的 diffs (diff -u). 他们指定要 diff -c
 </div>
 <div class="footnote" id="_footnote_11">
-<a href="#_footnoteref_11">11</a>. 不要问我为什么 Emacs 的维护者们不喜欢一元化的 diffs (diff -u). 他们指定要 diff -c
+<a href="#_footnoteref_11">11</a>. 21 世纪需要半 G 磁盘空间和 30 分支的下载
 </div>
 <div class="footnote" id="_footnote_12">
-<a href="#_footnoteref_12">12</a>. 21 世纪需要半 G 磁盘空间和 30 分支的下载
-</div>
-<div class="footnote" id="_footnote_13">
-<a href="#_footnoteref_13">13</a>. 这里 --rebase 是用来避免冲突如果你在本地有没有推送到 master 分支的提交。虽然你遵循了说明，你的本地修改可能只在私有分支上，而不是 master 分支。
+<a href="#_footnoteref_12">12</a>. 这里 --rebase 是用来避免冲突如果你在本地有没有推送到 master 分支的提交。虽然你遵循了说明，你的本地修改可能只在私有分支上，而不是 master 分支。
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-07-11 02:52:40 UTC
+Last updated 2017-03-27 07:54:35 UTC
 </div>
 </div>
 </body>
