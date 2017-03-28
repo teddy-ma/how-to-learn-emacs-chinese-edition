@@ -920,7 +920,7 @@ M-! date RET
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-回到配置脚本，调用 info-lookup-symbol 然后根据提示输入 test。
+回到 <code>configure</code> 脚本，调用 <code>info-lookup-symbol</code> 然后根据提示输入 test。
 </td>
 </tr>
 </table>
@@ -946,16 +946,16 @@ M-! date RET
 <div class="ulist">
 <ul>
 <li>
-<p>SPC 和 DEL 来滚动；当你达到了一个 『节点』（一页或者一个章节）的末尾，再次按下 SPC 就会顺序到达下一个节点。我必须警告你，DEL 有时会很淘气当你达到一个章节的第一个节点时。</p>
+<p><code>SPC</code> 和 <code>DEL</code> 来滚动；当你达到了一个 『节点』（一页或者一个章节）的末尾，再次按下 <code>SPC</code> 就会顺序到达下一个节点。我必须警告你，<code>DEL</code> 有时会很淘气当你达到一个章节的第一个节点时。</p>
 </li>
 <li>
-<p>l（字母 ell）回退历史。</p>
+<p><code>l</code>（字母 ell）回退历史。</p>
 </li>
 <li>
-<p>u 或者 ^ 向上移动到最接近的目录。重复按下 u 会把你带到主 Info 目录，那包含所有的 Info 手册在你的系统中。（Emacs 相关的手册在互联网上可以能找到。）</p>
+<p><code>u</code> 或者 <code>^</code> 向上移动到最接近的目录。重复按下 <code>u</code> 会把你带到主 Info 目录，那包含所有的 Info 手册在你的系统中。（Emacs 相关的手册在互联网上可以能找到。）</p>
 </li>
 <li>
-<p>使用常见的机制来搜索 (C-s 和 C-r)；当你达到一个节点的结尾时，再次按下 C-s 将会继续搜索余下的手册。</p>
+<p>使用常见的机制来搜索 (<code>C-s</code> 和 <code>C-r</code>)；当你达到一个节点的结尾时，再次按下 <code>C-s</code> 将会继续搜索余下的手册。</p>
 </li>
 </ul>
 </div>
@@ -966,8 +966,8 @@ M-! date RET
 <p>Info 文档简直太好用了。如果你在维护一个 Makefile 你可以查找深奥的符号比如 $@ 的意义。需要写一些 socket 相关的程序？在后面的章节中我们将会安装 glibc (the GNU implementation of the Unix standard library) 的 Info 手册。</p>
 </div>
 <div class="paragraph">
-<p>info-lookup-symbol 使用当前缓冲区的模式来定义查看哪个手册。有时候它也说不清楚，所以它会提示你：输入 sh-mode 或者 makefile-mode 或者 c-mode
-或者其他 （按下 TAB 来显示所有可选项）。使用前缀 C-u 来调用 info-lookup-symbol 的话它会总是询问你。</p>
+<p><code>info-lookup-symbol</code> 使用当前缓冲区的模式来定义查看哪个手册。有时候它也说不清楚，所以它会提示你：输入 <code>sh-mode</code> 或者 <code>makefile-mode</code> 或者 <code>c-mode</code>
+或者其他 （按下 TAB 来显示所有可选项）。使用前缀 <code>C-u</code> 来调用 <code>info-lookup-symbol</code> 的话它会总是询问你。</p>
 </div>
 </div>
 <div class="sect2">
@@ -980,13 +980,13 @@ M-! date RET
 </td>
 <td class="content">
 <div class="paragraph">
-<p>有必要的话切换到 rl.c 缓冲区（使用 C-x b）。</p>
+<p>有必要的话切换到 <code>rl.c</code> 缓冲区（使用 <code>C-x b</code>）。</p>
 </div>
 <div class="paragraph">
-<p>移动光标到 main 函数（使用 C-s 搜索）。故意在 { 花括号那里制造一个错误，就像下面的例子一样，然后保存你的修改。</p>
+<p>移动光标到 <code>main</code> 函数（使用 <code>C-s</code> 搜索）。故意在 { 花括号那里制造一个错误，就像下面的例子一样，然后保存你的修改。</p>
 </div>
 <div class="paragraph">
-<p>M-x compile (并且接受默认的 shell 命令 make -k)。</p>
+<p><code>M-x compile</code> (并且接受默认的 shell 命令 <code>make -k</code>)。</p>
 </div>
 </td>
 </tr>
@@ -999,13 +999,13 @@ M-! date RET
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-让激活的鼠标仍然处于 rl.c 的窗口，输入 C-x 0（零）来最大化 <strong>compilation</strong> 窗口。
+让激活的鼠标仍然处于 <code>rl.c</code> 的窗口，输入 <code>C-x 0</code>（零）来最大化 <strong>compilation</strong> 窗口。
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>(C-x 1, 你在教程中学到过的, 隐藏了所有的窗口除了当前被选中的那个；C-x 0 做了相反的事)</p>
+<p>(<code>C-x 1</code>, 你在教程中学到过的, 隐藏了所有的窗口除了当前被选中的那个；<code>C-x 0</code> 做了相反的事)</p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -1014,7 +1014,7 @@ M-! date RET
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-之后, 使用 C-x 2 和 C-x 3 C-x o (字母 o) 来在窗口之间跳转。
+之后, 使用 <code>C-x 2</code> 和 <code>C-x 3</code> <code>C-x o</code> (字母 o) 来在窗口之间跳转。
 </td>
 </tr>
 </table>
@@ -1029,7 +1029,7 @@ M-! date RET
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-使用 C-h m 来获得 compilation-mode 的帮助和它的按键绑定。 好消息是：这个模式的帮助文档很短。然后，不要去无聊的阅读所有的激活状态的副模式, 除非你确定你想看。
+使用 <code>C-h m</code> 来获得 <code>compilation-mode</code> 的帮助和它的按键绑定。 好消息是：这个模式的帮助文档很短。然后，不要去无聊的阅读所有的激活状态的副模式, 除非你确定你想看。
 </td>
 </tr>
 </table>
@@ -1041,13 +1041,13 @@ M-! date RET
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-试试看 compilation-next-error 和 compilation-previous-error 的按键绑定。如果 next-error-follow-minor-mode 听起来很迷人，也可以试试。
+试试看 <code>compilation-next-error</code> 和 <code>compilation-previous-error</code> 的按键绑定。如果 <code>next-error-follow-minor-mode</code> 听起来很迷人，也可以试试。
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>编辑命令会在运行在 buffer 的相关的目录的下。通常是包含了 buffer 的文件的目录。想要运行一个不同的 Makefile， 你可以指定  -C (--directory) 或者 -f (--makefile) 的 make 选项；或者你可以使用 M-x cd 改变 buffer 的默认目录在 M-x compile 之前。</p>
+<p>编辑命令会在运行在 buffer 的相关的目录的下。通常是包含了 buffer 的文件的目录。想要运行一个不同的 Makefile， 你可以指定  -C (--directory) 或者 -f (--makefile) 的 make 选项；或者你可以使用 <code>M-x cd</code> 改变 buffer 的默认目录在 <code>M-x compile</code> 之前。</p>
 </div>
 </div>
 <div class="sect2">
@@ -3401,7 +3401,7 @@ Control 和 Meta 键上，也有 OS X 的键位绑定在 Command 键上。</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-03-27 07:54:35 UTC
+Last updated 2017-03-28 08:23:59 UTC
 </div>
 </div>
 </body>
