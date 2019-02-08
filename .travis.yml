@@ -1,6 +1,9 @@
 language: ruby
 rvm:
-- 2.3.1
+- 2.6.0
+before_install:
+- gem update --system
+- gem install bundler
 script:
 - git config --global user.email "mlc880926@gmail.com"
 - git config --global user.name "Ma Lucheng"
@@ -19,4 +22,4 @@ script:
 - git push -q upstream HEAD:gh-pages
 env:
   global:
-    secure: Pvu0mnLn9lXG7eOIhTd0KVbn//T/XWGaG4YQ7OPy3Je/XhhaVO6Ufm4ZMl7zQE2DokNfg5vOkDRy8jdsOksvtekjsEGIeoxMhYeJoyzMBb6+SWyQ1+IziCLWJKSO57fzem2h8U7Ps5J1NIcI4yOZpnV0pRtEOzKHDuhKF/Jo6Zg=
+    secure: KvgOd/FYNooIVPdn7yUG0vuZAu2wEnLIVETgawjXm2otd7BHNiHF2mfsT6xedaFvT459M+j71XNVVDMngDAuCU7K1zQaV9MBCAwTojeNSsd/j91DRr9Gdi+BCwPkms5X2kAc0E2DewzGEICAJ7L8rRkaZuAfEXJWgb8IvqSHWaQ=
